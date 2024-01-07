@@ -46,7 +46,9 @@ enum Role{
  model Orders{
   id             Int       @id @default(autoincrement())
   userId         Int
-  user           Users     @relation(fields: [userId],references: [id])  
+  status         String    
+  orderDate      DateTime @default(now())
+  user           Users     @relation(fields: [userId],references: [id],onDelete: Cascade)  
   OrderItems     OrderItems[]  
  }
 
@@ -55,7 +57,8 @@ enum Role{
   orderId   Int
   productId Int
   Quantity  Int
-  order     Orders      @relation(fields: [orderId],references: [id])
+  totalAmount  Float
+  order     Orders      @relation(fields: [orderId],references: [id],onDelete: Cascade)
   product   Products    @relation(fields: [productId],references: [id])
   
  }
@@ -64,6 +67,7 @@ enum Role{
   id          Int     @id @default(autoincrement())
   userId      Int
   productId   Int
-  user   Users        @relation(fields: [userId],references: [id])
+  quantity    Int      
+  user   Users        @relation(fields: [userId],references: [id],onDelete: Cascade)
   product Products    @relation(fields: [productId],references: [id])
  }

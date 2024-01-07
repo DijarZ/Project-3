@@ -1,0 +1,91 @@
+<main>
+  <div
+    class="container-fluid bg-trasparent my-4 p-3"
+    style="position: relative"
+  >
+    <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+      <div class="col" *ngFor="let product of products">
+        <div class="card h-100 shadow-sm">
+          <img [src]="product.image" class="card-img-top" alt="Product Image" />
+          <div class="card-body">
+            <div class="clearfix mb-3">
+              <span class="float-start badge rounded-pill bg-primary">{{
+                product.productName
+              }}</span>
+              <span class="float-end price-hp">{{ product.price }}&euro;</span>
+            </div>
+            <h5 class="card-title">{{ product.description }}</h5>
+            <p>{{ product.quantity }}</p>
+            <!-- Editing section for products -->
+            <div *ngIf="isEditingProduct && selectedProductId === product.id">
+              <!-- Input fields for editing -->
+              <input
+                type="text"
+                [(ngModel)]="product.productName"
+                placeholder="New Product Name"
+              />
+              <input
+                type="text"
+                [(ngModel)]="product.description"
+                placeholder="New Description"
+              />
+              <input
+                type="text"
+                [(ngModel)]="product.quantity"
+                placeholder="New Quantity"
+              />
+              <input
+                type="file"
+                (change)="onFileSelected($event)"
+                accept="image/*"
+              />
+              <input
+                type="text"
+                [(ngModel)]="product.price"
+                placeholder="New Price"
+              />
+              <button (click)="confirmUpdateProduct(product.id)">OK</button>
+            </div>
+            <button (click)="toggleEditProduct(product.id)">Edit</button>
+            <button (click)="deleteProduct(product.id)">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div>
+  <form>
+    <input
+      type="text"
+      placeholder="Product Name"
+      [(ngModel)]="productName"
+      [ngModelOptions]="{ standalone: true }"
+    /><br />
+    <input
+      type="text"
+      placeholder="Description"
+      [(ngModel)]="description"
+      [ngModelOptions]="{ standalone: true }"
+    /><br />
+    <input
+      type="number"
+      placeholder="Price"
+      [(ngModel)]="price"
+      [ngModelOptions]="{ standalone: true }"
+    /><br />
+    <input
+      type="number"
+      placeholder="Quantity"
+      [(ngModel)]="quantity"
+      [ngModelOptions]="{ standalone: true }"
+    /><br />
+    <input
+      type="file"
+      (change)="onFileSelected($event)"
+      accept="image/*"
+    /><br />
+    <button type="button" (click)="createNewProduct()">Create Product</button>
+  </form>
+</div>

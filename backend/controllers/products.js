@@ -43,28 +43,40 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
   try {
-    const { id, productName, description, quantity, price } = req.body;
-    const updatedProduct = await prisma.products.update({
-      where: { id: parseInt(id) },
-      data: {
-        productName,
-        description,
-        price,
-        quantity,
-      },
+    const { id } = req.params;
+    const { productName, description, quantity, price, image } = req.body;
+    const parsedPrice = parseFloat(price);
+
+    upload(req, res, async (err) => {
+      if (err) {
+        console.error("Error uploading image:", err);
+        return res.status(500).send("Image upload failed");
+      }
+      const updatedProduct = await prisma.products.update({
+        where: { id: parseInt(id) },
+        data: {
+          productName,
+          description,
+          price: isNaN(parsedPrice) ? undefined : parsedPrice, // Check if parsedPrice is a valid number
+          quantity: parseInt(quantity),
+          image: req.file ? `/images/${req.file.filename}` : undefined,
+        },
+      });
+
+      console.log("Updated Product:", updatedProduct);
+      res.json(updatedProduct);
     });
-    console.log(("Updated Product:", updatedProduct));
-    res.json(updatedProduct);
   } catch (error) {
     console.error("Error updating Product:", error);
     res.status(500).send("Internal Server Error");
   }
 };
+
 const deleteProduct = async (req, res) => {
   try {
-    const { id, productName } = req.body;
+    const { id } = req.params;
     const deletedProduct = await prisma.products.delete({
-      where: { id: parseInt(id), productName },
+      where: { id: parseInt(id) },
     });
     console.log(("Deleted Product:", deletedProduct));
     res.json(deletedProduct);

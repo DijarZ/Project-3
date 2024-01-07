@@ -12,20 +12,29 @@ const jwt = require("jsonwebtoken");
 
 const verifyToken = async (req, res, next) => {
   try {
-    const token = req.headers.authorization.split(" ")[1];
+    const authorizationHeader = req.headers.authorization;
+
+    if (!authorizationHeader) {
+      return res.status(401).send("Missing Authorization Header");
+    }
+
+    const token = authorizationHeader.split(" ")[1];
+
+    if (!token) {
+      return res.status(401).send("Invalid Token");
+    }
+
     const verify = jwt.verify(token, process.env.SECRET_TOKEN);
+
     if (verify) {
       req.user = verify;
       next();
+    } else {
+      return res.status(401).send("Invalid Token");
     }
   } catch (error) {
-    if (error instanceof jwt.JsonWebTokenError) {
-      console.log(error);
-      res.status(401).send("Invalid Token");
-    } else {
-      console.log(error);
-      res.status(500).send("Internal server error!");
-    }
+    console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 };
 

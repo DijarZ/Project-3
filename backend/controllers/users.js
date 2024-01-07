@@ -37,7 +37,6 @@ const loginUser = async function (req, res) {
     const user = await prisma.users.findFirst({
       where: {
         email,
-        password,
       },
     });
 
@@ -46,7 +45,13 @@ const loginUser = async function (req, res) {
         message: "Përdoruesi nuk u gjet ose të dhënat janë të pasakta.",
       });
     }
+    const pwDecrypt = await bcrypt.compare(password, user.password);
 
+    if (!pwDecrypt) {
+      return res.status(401).json({
+        message: "Fjalëkalimi është i pasaktë.",
+      });
+    }
     const token = await jwt.sign(user, process.env.SECRET_TOKEN, {
       expiresIn: "60m",
     });
@@ -60,35 +65,47 @@ const loginUser = async function (req, res) {
 
 const updateUser = async (req, res) => {
   try {
-    const { currentName, currentEmail, newName, newLastName, newEmail } =
-      req.body;
+    const { userId } = req.params;
+    const { newName, newLastName, newEmail, newPw, newRole } = req.body;
 
     const user = await prisma.users.findUnique({
       where: {
-        firstName: currentName,
-        email: currentEmail,
+        id: parseInt(userId, 10),
       },
     });
 
     if (!user) {
       return res.status(404).json({ message: "Përdoruesi nuk u gjet." });
-    } else if (
-      !(req.user.role === "admin") &&
-      (req.user.firstName !== currentName || req.user.email !== currentEmail)
-    ) {
+    } else if (!(req.user.role === "admin") && req.user.id !== user.id) {
       return res.status(403).send("Ju nuk keni leje për të kryer këtë veprim.");
+    }
+
+    const dataToUpdate = {};
+
+    // Check each field and add it to the update data if provided
+    if (newName !== undefined) {
+      dataToUpdate.firstName = newName;
+    }
+    if (newLastName !== undefined) {
+      dataToUpdate.lastName = newLastName;
+    }
+    if (newEmail !== undefined) {
+      dataToUpdate.email = newEmail;
+    }
+    if (newPw !== undefined) {
+      const saltRounds = 10;
+      const hashedPw = await bcrypt.hash(newPw, saltRounds);
+      dataToUpdate.password = hashedPw;
+    }
+    if (newRole !== undefined) {
+      dataToUpdate.role = newRole;
     }
 
     const updatedUser = await prisma.users.update({
       where: {
-        firstName: currentName,
-        email: currentEmail,
+        id: parseInt(userId, 10),
       },
-      data: {
-        firstName: newName || user.firstName,
-        lastName: newLastName || user.lastName,
-        email: newEmail || user.email,
-      },
+      data: dataToUpdate,
     });
 
     res.json(updatedUser);
@@ -101,27 +118,22 @@ const updateUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   try {
-    const { firstName, email } = req.body;
+    const { id } = req.params;
 
     const user = await prisma.users.findUnique({
       where: {
-        firstName,
-        email,
+        id: parseInt(id), // Assuming id is a number; if it's a string, remove parseInt
       },
     });
     //  if(!user){
     //     return res.status(404).json("Perdoruesi nuk u gjet")
     // }
-    if (
-      req.user.role !== "admin" &&
-      (req.user.firstName !== firstName || req.user.email !== email)
-    ) {
+    if (req.user.role !== "admin" && req.user.id !== user.id) {
       return res.status(403).send("Ju nuk keni te drejt per te bere kete");
     }
     const deletedUser = await prisma.users.delete({
       where: {
-        firstName,
-        email,
+        id: parseInt(id),
       },
     });
 
@@ -135,27 +147,44 @@ const deleteUser = async (req, res) => {
     res.status(500).json("Internal server error!");
   }
 };
+const getUsers = async (req, res) => {
+  try {
+    const allusers = await prisma.users.findMany();
+    res.json(allusers);
+    console.log(allusers);
+  } catch (error) {
+    console.error(error);
+
+    res.status(500).send("Internal Server Error!");
+  }
+};
+const getUserById = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const getUserById = await prisma.users.findUnique({
+      where: { id: parseInt(id) },
+    });
+    if (!getUserById) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    res.json(getUserById);
+    console.log(getUserById);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal server Errror");
+  }
+};
 module.exports = {
+  getUsers,
   registerUser,
   loginUser,
   updateUser,
   deleteUser,
+  getUserById,
 };
 
 // const { PrismaClient } = require("@prisma/client");
 // const prisma = new PrismaClient();
-
-// const getUsers = async (req, res) => {
-//   try {
-//     const allusers = await prisma.users.findMany();
-//     res.json(allusers);
-//     console.log(allusers);
-//   } catch (error) {
-//     console.error(error);
-
-//     res.status(500).send("Internal Server Error!");
-//   }
-// };
 
 // const loginUser = (req, res) => {
 //   const { email, password } = req.body;

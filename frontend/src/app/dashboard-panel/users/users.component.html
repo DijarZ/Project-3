@@ -1,0 +1,58 @@
+<div class="col-md-9">
+  <div class="main-content card card2 p-3">
+    <!-- User rows -->
+    <div class="user-columns">
+      <ng-container *ngFor="let user of users" class="user-container">
+        <div class="user-row">
+          <div class="user-data">
+            <p>
+              {{ user.id }} {{ user.firstName }} {{ user.lastName }} -
+              {{ user.email }}
+            </p>
+          </div>
+          <div class="user-actions">
+            <div
+              *ngIf="isEditingUser && selectedUserId === user.id"
+              class="edit-fields"
+            >
+              <input
+                type="text"
+                [(ngModel)]="user.newName"
+                placeholder="New Name"
+              />
+              <input
+                type="text"
+                [(ngModel)]="user.newLastName"
+                placeholder="New Last Name"
+              />
+              <input
+                type="text"
+                [(ngModel)]="user.newEmail"
+                placeholder="New Email"
+              />
+              <input
+                type="text"
+                [(ngModel)]="user.newRole"
+                placeholder="New Role"
+              />
+              <input
+                type="password"
+                [(ngModel)]="user.newPw"
+                placeholder="New Password"
+              />
+
+              <button (click)="confirmUpdate(user.id)">OK</button>
+            </div>
+            <button (click)="toggleEdit(user.id)" class="edit-button">
+              Edit
+            </button>
+            <button (click)="deleteUser(user.id)" class="delete-button">
+              Delete
+            </button>
+          </div>
+        </div>
+      </ng-container>
+      <hr class="row-separator" />
+    </div>
+  </div>
+</div>

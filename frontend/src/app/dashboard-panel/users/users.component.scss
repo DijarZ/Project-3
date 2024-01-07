@@ -1,0 +1,99 @@
+/* Sidebar styles */
+.sidebar {
+  background-color: #30336b;
+  color: white;
+  height: 100vh;
+  padding-top: 20px;
+}
+
+.sidebar-heading img {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+}
+
+.sidebar-heading span {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.sidebar-hline {
+  border: none;
+  border-top: 1px solid #fff;
+  margin-bottom: 20px;
+}
+
+.sidebar-menu button {
+  width: 100%;
+  padding: 10px 0;
+  text-align: left;
+  border: none;
+  background: transparent;
+  color: #fff;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.sidebar-menu button:hover {
+  background-color: #222f3e;
+}
+
+/* Main content */
+.main-content {
+  padding-top: 20px;
+}
+
+.user-columns {
+  display: wrap;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.user-container {
+  background-color: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.user-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.user-data {
+  width: calc(100% - 100px);
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+}
+
+.edit-fields {
+  display: wrap;
+  flex-direction: column;
+  align-items: flex-start; /* Align items at the start */
+  gap: 10px; /* Spacing between inputs */
+}
+
+.edit-fields input {
+  width: 200px; /* Set input width as needed */
+}
+
+.edit-button,
+.delete-button {
+  padding: 8px 15px;
+  margin-left: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover,
+.delete-button:hover {
+  background-color: #ddd;
+}

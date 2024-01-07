@@ -1,0 +1,56 @@
+<main>
+  <div
+    class="container-fluid bg-trasparent my-4 p-3"
+    style="position: relative"
+  >
+    <div class="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3">
+      <div class="col" *ngFor="let product of products">
+        <div class="card h-100 shadow-sm">
+          <img [src]="product.image" class="card-img-top" alt="Product Image" />
+          <div class="card-body">
+            <div class="clearfix mb-3">
+              <span class="float-start badge rounded-pill bg-primary">{{
+                product.productName
+              }}</span>
+              <span class="float-end price-hp">{{ product.price }}&euro;</span>
+            </div>
+            <h5 class="card-title">{{ product.description }}</h5>
+            <p>{{ product.quantity }}</p>
+            <input #quantityInput type="number" placeholder="Enter quantity" />
+            <button
+              (click)="
+                addToCart(
+                  quantityInput.value ? +quantityInput.value : 1,
+                  product.id
+                )
+              "
+            >
+              Add to Cart
+            </button>
+            <button (click)="addToCart(1, product.id)">Add One to Cart</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button (click)="getCart()">Shopping Cart</button>
+
+    <div *ngIf="showCart">
+      <div *ngIf="cartData && cartData.length > 0">
+        <!-- Render cart data here as needed -->
+        <ul>
+          <li *ngFor="let product of cartData">
+            Product ID: {{ product.productId }}, Quantity:
+            {{ product.quantity }}
+            <button (click)="removeProductFromCart(product.id)">Remove</button>
+            <!-- Add Remove button -->
+          </li>
+        </ul>
+        <button (click)="Checkout(userId, orderItems)">Checkout</button>
+      </div>
+      <div *ngIf="!cartData || cartData.length === 0">
+        No items in the cart.
+      </div>
+    </div>
+  </div>
+</main>

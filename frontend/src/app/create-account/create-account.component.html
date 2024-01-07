@@ -1,0 +1,57 @@
+<div class="register-photo">
+  <div class="form-container">
+    <form #registerForm="ngForm" (ngSubmit)="createAccount()">
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="text"
+          name="firstName"
+          placeholder="First Name"
+          [(ngModel)]="firstName"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="text"
+          name="lastName"
+          placeholder="Last Name"
+          [(ngModel)]="lastName"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="email"
+          name="email"
+          placeholder="Email"
+          [(ngModel)]="email"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <input
+          class="form-control"
+          type="password"
+          name="password"
+          placeholder="Password"
+          [(ngModel)]="password"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <button
+          type="submit"
+          class="btn btn-primary btn-block"
+          [disabled]="!registerForm.valid"
+        >
+          Sign Up
+        </button>
+      </div>
+      <a class="already" href="#">You already have an account? Login here.</a>
+    </form>
+  </div>
+</div>
