@@ -19,26 +19,6 @@ const getOrderItems = async (req, res) => {
     res.status(500).send("Internal server Errror");
   }
 };
-const checkout = async (req, res) => {
-  try {
-    const { user } = req;
-
-    const newOrder = await prisma.orders.create({
-      data: {
-        userId: user.id,
-        status: "Pending",
-      },
-    });
-    console.log("order created");
-    const orderId = newOrder.id;
-    res
-      .status(200)
-      .json({ orderId: newOrder.id, message: "Order created successfully" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: "Error processing checkout" });
-  }
-};
 
 const createOrderItems = async (req, res) => {
   try {
@@ -139,5 +119,4 @@ module.exports = {
   removeProductFromOrder,
   addProductToOrder,
   createOrderItems,
-  checkout,
 };

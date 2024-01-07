@@ -6,7 +6,6 @@ const {
   addProductToCart,
   removeProductById,
   removeProductsByUserId,
-  checkout,
 } = require("../controllers/shopingcart");
 const { verifyToken } = require("../middlewares/verifytoken");
 

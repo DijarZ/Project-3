@@ -5,7 +5,6 @@ const {
   removeProductFromOrder,
   addProductToOrder,
   createOrderItems,
-  checkout,
 } = require("../controllers/orderItems");
 const { verifyToken } = require("../middlewares/verifytoken");
 

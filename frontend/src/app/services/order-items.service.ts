@@ -59,9 +59,20 @@ export class OrderItemsService {
   }
 
   createOrderItems(orderId: number, orderItems: any[]): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/createOrderItems`, {
+    const orders = {
       orderId: orderId,
       orderItems: orderItems,
-    });
+    };
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.token}`,
+      }),
+    };
+    return this.http.post<any>(
+      `${this.baseUrl}/createOrderItems`,
+      orders,
+      httpOptions
+    );
   }
 }

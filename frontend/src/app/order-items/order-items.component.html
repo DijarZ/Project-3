@@ -1,24 +1,11 @@
-<!-- Display Orders -->
-<div *ngFor="let order of orders">
-  <h3>Order ID: {{ order.id }}</h3>
-  <p>Status: {{ order.status }}</p>
-  <!-- Add more order details here as needed -->
-</div>
-
-<!-- Display a message if no orders are found -->
-<div *ngIf="orders.length === 0">
-  <p>No orders found for this user.</p>
-</div>
-
-<form (ngSubmit)="createOrderItems()">
+<form>
   <div *ngFor="let item of orderItems; let i = index">
     <label for="productId{{ i }}">Product ID {{ i + 1 }}:</label>
     <input
       type="text"
       id="productId{{ i }}"
       name="productId{{ i }}"
-      [(ngModel)]="orderItems[i].productId"
-      required
+      [value]="item.product.id"
       disabled
     />
 
@@ -27,8 +14,7 @@
       type="number"
       id="quantity{{ i }}"
       name="quantity{{ i }}"
-      [(ngModel)]="orderItems[i].quantity"
-      required
+      [value]="item.Quantity"
       disabled
     />
 
@@ -38,10 +24,10 @@
       type="text"
       id="totalAmount{{ i }}"
       name="totalAmount{{ i }}"
-      [(ngModel)]="orderItems[i].totalAmount"
+      [value]="item.totalAmount"
       disabled
     />
   </div>
 
-  <button type="submit">Submit Order Items</button>
+  <button type="button" (click)="createOrderItems()">Submit Order Items</button>
 </form>

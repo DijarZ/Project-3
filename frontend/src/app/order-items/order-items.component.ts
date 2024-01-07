@@ -48,26 +48,36 @@ export class OrderItemsComponent implements OnInit {
   }
 
   calculateOrderItems(cartItems: any[]): void {
+    // Reset orderItems array before populating it again
+    this.orderItems = [];
+
+    // Loop through each cart item
     cartItems.forEach(async (cartItem) => {
       try {
+        // Fetch product details using the product ID from the cartItem
         const productDetails = await this.dataService
           .getProductById(cartItem.productId)
           .toPromise();
+
+        // Extract price and quantity
         const price = productDetails.price;
         const quantity = parseInt(cartItem.quantity);
 
+        // Check if price and quantity are valid numbers
         if (!isNaN(price) && !isNaN(quantity)) {
           const totalAmount = price * quantity;
+          // Push order item to the orderItems array with required properties
           this.orderItems.push({
-            productId: cartItem.productId,
-            quantity: quantity,
+            product: { id: cartItem.productId, price: price }, // This structure should match what the backend expects
+            Quantity: quantity,
             totalAmount: totalAmount,
           });
         } else {
           console.error('Invalid price or quantity:', cartItem);
+          // Push default values to orderItems array in case of invalid price or quantity
           this.orderItems.push({
-            productId: cartItem.productId,
-            quantity: isNaN(quantity) ? 1 : quantity,
+            product: { id: cartItem.productId, price: 0 }, // Provide a default price if needed
+            Quantity: isNaN(quantity) ? 1 : quantity,
             totalAmount:
               isNaN(price) || isNaN(quantity)
                 ? 0
@@ -82,28 +92,28 @@ export class OrderItemsComponent implements OnInit {
   }
 
   createOrderItems(): void {
-    // Retrieve shopping cart items from the shopping cart service
-    this.shopingCartService.getCartItems().subscribe(
-      (cartItems) => {
-        console.log('Order Items:', this.orderItems);
+    console.log('OrderId:', this.orderId);
+    console.log('OrderItems:', this.orderItems);
 
-        this.orderId;
-        this.orderItemsService
-          .createOrderItems(this.orderId!, this.orderItems)
-          .subscribe(
-            (response) => {
-              console.log('Order items created:', response);
-            },
-            (error) => {
-              // Handle error, if needed
-              console.error('Error creating order items:', error);
-            }
-          );
-      },
-      (error) => {
-        // Handle error in fetching shopping cart items, if needed
-        console.error('Error fetching shopping cart items:', error);
-      }
-    );
+    if (
+      this.orderId !== null &&
+      this.orderItems &&
+      this.orderItems.length > 0
+    ) {
+      console.log('Creating order items...');
+      this.orderItemsService
+        .createOrderItems(this.orderId!, this.orderItems)
+        .subscribe(
+          (response) => {
+            console.log('Order items created:', response);
+          },
+          (error) => {
+            console.error('Error creating order items:', error);
+            console.log(error);
+          }
+        );
+    } else {
+      console.error('No orderId or empty orderItems array to create.');
+    }
   }
 }
