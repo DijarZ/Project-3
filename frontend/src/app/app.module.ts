@@ -18,7 +18,10 @@ import { DashboardPanelProductsComponent } from './dashboard-panel-products/dash
 import { UsersComponent } from './dashboard-panel/users/users.component';
 import { ProductsComponent } from './products/products.component';
 import { OrderItemsComponent } from './order-items/order-items.component';
-
+import { NavbarComponent } from './navbar/navbar.component';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { FooterComponent } from './footer/footer.component';
+import { ShopingcartComponent } from './shopingcart/shopingcart.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -29,6 +32,9 @@ import { OrderItemsComponent } from './order-items/order-items.component';
     UsersComponent,
     ProductsComponent,
     OrderItemsComponent,
+    NavbarComponent,
+    FooterComponent,
+    ShopingcartComponent,
   ],
   imports: [
     BrowserModule,
@@ -39,7 +45,7 @@ import { OrderItemsComponent } from './order-items/order-items.component';
     BrowserAnimationsModule,
     MatSnackBarModule,
   ],
-  providers: [provideClientHydration()],
+  providers: [provideClientHydration(), provideHttpClient(withFetch())],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

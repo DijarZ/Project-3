@@ -80,6 +80,9 @@ export class DataService {
   getProductById(productId: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/productId/${productId}`);
   }
+  getProductsByName(name: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/getProducts/ByName/${name}`);
+  }
   deleteProduct(id: string): Observable<any> {
     // Krijimi i objektit të header-it vetëm nëse token ekziston
     const httpOptions = this.token

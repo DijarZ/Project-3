@@ -21,6 +21,12 @@ export class ProductsComponent {
   userId!: number;
   orderItems: any[] = [];
   orderId: any;
+  fetchedProducts: any[] = [];
+  searchQuery: string = '';
+  originalProducts: any[] = []; // Add a property to store the original list of products
+  isSearchMode: boolean | undefined;
+  allProducts: any[] = []; // Combined array of products and fetchedProducts
+
   constructor(
     private dataService: DataService,
     private snackBar: MatSnackBar,
@@ -32,7 +38,7 @@ export class ProductsComponent {
 
   ngOnInit(): void {
     this.fetchProducts();
-
+    this.originalProducts = this.products.slice();
     //get userId from token to addproduct on shopingcart
     const userId = this.authService.getUserIdFromToken();
     console.log('User ID:', userId);
@@ -133,6 +139,7 @@ export class ProductsComponent {
       this.shopingcartService.getCartByUserId().subscribe(
         (data) => {
           this.cartData = data;
+
           this.showCart = true; // Set showCart to true when cart data is fetched
           console.log('Cart Data:', this.cartData);
         },
@@ -159,42 +166,77 @@ export class ProductsComponent {
     );
   }
 
-  Checkout(userId: number, orderItems: any[]): void {
-    this.orderItemsServie.createOrders(userId, orderItems).subscribe(
-      (response) => {
-        if (response && response.orderId) {
-          // Change this to response.orderId
-          const orderId = response.orderId;
-          console.log('Order created with ID:', orderId);
-          setTimeout(() => {
-            this.router.navigate(['/order-items'], {
-              queryParams: { orderId },
-            });
-          }, 2000);
-        } else {
-          console.error('Invalid response structure. Order ID not found.');
-        }
-      },
-      (error) => {
-        console.error(
-          'Error processing checkout your token is expired or any other problem',
-          error
-        );
-        // Handle error scenario
-      }
-    );
-  }
-
-  // createOrderItems(orderId: number, orderItems: any[]): void {
-  //   this.orderItemsServie.createOrderItems(orderId, orderItems).subscribe(
-  //     (response: any) => {
-  //       console.log('Order items created:', response);
-  //       // Handle success (if needed)
+  // Checkout(userId: number, orderItems: any[]): void {
+  //   this.orderItemsServie.createOrders(userId, orderItems).subscribe(
+  //     (response) => {
+  //       if (response && response.orderId) {
+  //         // Change this to response.orderId
+  //         const orderId = response.orderId;
+  //         console.log('Order created with ID:', orderId);
+  //         setTimeout(() => {
+  //           this.router.navigate(['/order-items'], {
+  //             queryParams: { orderId },
+  //           });
+  //         }, 2000);
+  //       } else {
+  //         console.error('Invalid response structure. Order ID not found.');
+  //       }
   //     },
-  //     (error: any) => {
-  //       console.error('Error creating order items:', error);
+  //     (error) => {
+  //       console.error(
+  //         'Error processing checkout your token is expired or any other problem',
+  //         error
+  //       );
   //       // Handle error scenario
   //     }
   //   );
   // }
+  getDisplayedProducts(): any[] {
+    return this.searchQuery ? this.fetchedProducts : this.products;
+  }
+
+  onClick(): void {
+    if (this.searchQuery.trim() !== '') {
+      this.fetchedProducts = this.products.filter((product) =>
+        product.productName
+          .toLowerCase()
+          .includes(this.searchQuery.toLowerCase())
+      );
+      this.isSearchMode = true; // Set search mode to true
+    } else {
+      this.fetchedProducts = [];
+      this.isSearchMode = false; // Set search mode to false when the search query is empty
+    }
+  }
+
+  searchProductsByName(name: string): void {
+    this.dataService.getProductsByName(name).subscribe(
+      (fetchedProducts) => {
+        this.fetchedProducts = fetchedProducts;
+        this.products = this.combineProducts(); // Combine fetched and original products
+      },
+      (error) => {
+        console.error('Error fetching searched products:', error);
+        console.log(error);
+      }
+    );
+  }
+
+  combineProducts(): any[] {
+    // Merge products and fetchedProducts into allProducts array
+    this.allProducts = [...this.originalProducts, ...this.fetchedProducts];
+    return this.allProducts;
+  }
 }
+// createOrderItems(orderId: number, orderItems: any[]): void {
+//   this.orderItemsServie.createOrderItems(orderId, orderItems).subscribe(
+//     (response: any) => {
+//       console.log('Order items created:', response);
+//       // Handle success (if needed)
+//     },
+//     (error: any) => {
+//       console.error('Error creating order items:', error);
+//       // Handle error scenario
+//     }
+//   );
+// }

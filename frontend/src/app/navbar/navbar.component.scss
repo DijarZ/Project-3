@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap");
+
+body {
+  background: #cecece;
+}
+
+header {
+  background: #1f5650;
+  color: #fff;
+}
+
+.left-side,
+.right-side {
+  height: 100vh;
+}
+
+.navbar-transparent {
+  background: transparent;
+}
+
+.navbar-nav > li > a {
+  color: #fff;
+}
+
+.navbar-nav > li:hover {
+  border-bottom: 1px solid #fff;
+}
+
+.navbar-nav > .active {
+  border-bottom: 1px solid #fff;
+}
+
+.navbar-brand {
+  font-family: "Allerta Stencil", sans-serif;
+  color: #83ff00;
+}
+
+.navbar-brand:hover {
+  color: #fff;
+}
+
+.carousel-item {
+  height: 100vh;
+  min-height: 350px;
+  background: no-repeat center center scroll;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.btn.order-button {
+  background: transparent;
+  border: 2px solid #83ff00;
+  color: #83ff00;
+  border-radius: 30%;
+  transition: 0.7s;
+}
+
+.btn.order-button:hover {
+  border: 2px solid #ce0000;
+  color: #ce0000;
+}
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.form-control {
+  width: auto; /* Adjust as needed */
+  margin: 8px; /* Add margin for better spacing */
+}

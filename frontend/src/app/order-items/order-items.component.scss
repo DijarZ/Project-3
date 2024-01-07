@@ -1,0 +1,46 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  color: #333;
+}
+
+/* Navbar Styles */
+.navbar {
+  background-color: #007bff !important;
+  color: white;
+}
+
+/* Form Container */
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-top: 50px;
+}
+
+/* Form Styles */
+.form-label {
+  font-weight: bold;
+}
+
+.form-control {
+  border-radius: 5px;
+}
+
+/* Button Styles */
+.btn-primary {
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .container {
+    padding: 20px;
+  }
+}

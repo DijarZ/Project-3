@@ -97,6 +97,27 @@ const getProducts = async (req, res) => {
   }
 };
 
+const getProductsByName = async (req, res) => {
+  try {
+    const { name } = req.params; // Fetch the name from query parameters
+    const productsByName = await prisma.products.findMany({
+      where: {
+        productName: {
+          contains: name, // Filtering products by name
+        },
+      },
+    });
+
+    if (!productsByName || productsByName.length === 0) {
+      return res.status(404).json({ error: "Products not found" });
+    }
+
+    res.json(productsByName);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
+  }
+};
 const getProductById = async (req, res) => {
   try {
     const { id } = req.params;
@@ -118,5 +139,6 @@ module.exports = {
   updateProduct,
   deleteProduct,
   getProducts,
+  getProductsByName,
   getProductById,
 };

@@ -37,7 +37,10 @@ const createOrderItems = async (req, res) => {
         },
       });
     }
-
+    await prisma.orders.update({
+      where: { id: orderId },
+      data: { status: "Completed" },
+    });
     res.status(200).json({ message: "Order items created successfully" });
   } catch (error) {
     console.error(error);

@@ -6,12 +6,13 @@ const {
   addProductToCart,
   removeProductById,
   removeProductsByUserId,
+  updateCartQuantity,
 } = require("../controllers/shopingcart");
-const { verifyToken } = require("../middlewares/verifytoken");
 
 router.get("/getcart", getCart);
 router.get("/cart/user/:id", getCartByUserId);
 router.post("/cart/add", addProductToCart);
+router.put("/update/cart/quantity", updateCartQuantity);
 router.delete("/cart/remove/product/:id", removeProductById);
 router.delete("/cart/remove/user/:userId", removeProductsByUserId);
 

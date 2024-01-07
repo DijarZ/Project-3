@@ -18,6 +18,7 @@ export class ShopingcartService {
   constructor(private http: HttpClient, private authService: AuthService) {
     this.token = this.authService.getToken();
   }
+
   addProductToCart(
     userId: string,
     productId: string,
@@ -49,5 +50,8 @@ export class ShopingcartService {
   }
   getCartItems(): Observable<any[]> {
     return this.http.get<any[]>(`${this.baseUrl}/getCart`);
+  }
+  updateCart(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/update/cart/quantity`);
   }
 }

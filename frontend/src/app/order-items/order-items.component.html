@@ -1,33 +1,50 @@
-<form>
-  <div *ngFor="let item of orderItems; let i = index">
-    <label for="productId{{ i }}">Product ID {{ i + 1 }}:</label>
-    <input
-      type="text"
-      id="productId{{ i }}"
-      name="productId{{ i }}"
-      [value]="item.product.id"
-      disabled
-    />
+<app-navbar></app-navbar>
 
-    <label for="quantity{{ i }}">Quantity {{ i + 1 }}:</label>
-    <input
-      type="number"
-      id="quantity{{ i }}"
-      name="quantity{{ i }}"
-      [value]="item.Quantity"
-      disabled
-    />
+<div class="container mt-5">
+  <form>
+    <div *ngFor="let item of orderItems; let i = index" class="mb-3">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="productId{{ i }}" class="form-label"
+            >Product ID {{ i + 1 }}:</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="productId{{ i }}"
+            [value]="item.product.id"
+            disabled
+          />
+        </div>
+        <div class="col-md-4">
+          <label for="quantity{{ i }}" class="form-label"
+            >Quantity {{ i + 1 }}:</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            id="quantity{{ i }}"
+            [value]="item.Quantity"
+            disabled
+          />
+        </div>
+        <div class="col-md-4">
+          <label for="totalAmount{{ i }}" class="form-label"
+            >Total Amount {{ i + 1 }}:</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="totalAmount{{ i }}"
+            [value]="item.totalAmount"
+            disabled
+          />
+        </div>
+      </div>
+    </div>
 
-    <!-- Display total amount -->
-    <label for="totalAmount{{ i }}">Total Amount {{ i + 1 }}:</label>
-    <input
-      type="text"
-      id="totalAmount{{ i }}"
-      name="totalAmount{{ i }}"
-      [value]="item.totalAmount"
-      disabled
-    />
-  </div>
-
-  <button type="button" (click)="createOrderItems()">Submit Order Items</button>
-</form>
+    <button type="button" class="btn btn-primary" (click)="createOrderItems()">
+      Submit Order Items
+    </button>
+  </form>
+</div>

@@ -40,11 +40,8 @@ const getCartByUserId = async (req, res) => {
 
 const addProductToCart = async (req, res) => {
   try {
-    const { userId, productId, quantity } = req.body;
+    const { userId, productId, quantity, price } = req.body;
 
-    // Check if userId, productId, and quantity are valid numbers
-
-    // Check if the product already exists in the shopping cart for the user
     const existingCartItem = await prisma.shopingCart.findFirst({
       where: {
         userId: parseInt(userId),
@@ -81,7 +78,7 @@ const addProductToCart = async (req, res) => {
     }
   } catch (error) {
     console.error("Error adding Product:", error);
-    console.log("Erro gjate krijimit", error);
+    console.log("Error gjate krijimit", error);
     res.status(500).send("Internal Server Error!");
   }
 };
@@ -108,6 +105,7 @@ const removeProductById = async (req, res) => {
     res.status(500).send("Internal server Error");
   }
 };
+
 const removeProductsByUserId = async (req, res) => {
   try {
     const { userId } = req.params; // Make sure userId is retrieved from req.params or req.body, depending on your setup
@@ -123,11 +121,46 @@ const removeProductsByUserId = async (req, res) => {
     res.status(500).send("Internal server Error");
   }
 };
+const updateCartQuantity = async (req, res) => {
+  try {
+    const { userId, productId, quantity } = req.body;
+
+    const existingCartItem = await prisma.shopingCart.findFirst({
+      where: {
+        userId: parseInt(userId),
+        productId: parseInt(productId),
+      },
+    });
+
+    if (existingCartItem) {
+      // If the product already exists in the cart, update the quantity
+      const updatedCartItem = await prisma.shopingCart.update({
+        where: {
+          id: existingCartItem.id,
+        },
+        data: {
+          quantity: parseInt(quantity),
+        },
+      });
+
+      console.log("Product quantity updated in cart:", updatedCartItem);
+      return res.json(updatedCartItem);
+    } else {
+      return res.status(404).json({
+        error: "Product not found in the cart.",
+      });
+    }
+  } catch (error) {
+    console.error("Error updating product quantity in cart:", error);
+    res.status(500).send("Internal Server Error!");
+  }
+};
 
 module.exports = {
   getCart,
   getCartByUserId,
   addProductToCart,
   removeProductById,
+  updateCartQuantity,
   removeProductsByUserId,
 };

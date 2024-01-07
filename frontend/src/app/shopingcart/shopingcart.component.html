@@ -1,0 +1,84 @@
+<div class="card">
+  <div class="row">
+    <div class="col-md-8 cart">
+      <div class="title">
+        <div class="row">
+          <div class="col">
+            <button class="btn btn-info mt-3" (click)="getCart()">
+              Shopping Cart
+            </button>
+          </div>
+          <div class="col align-self-center text-right text-muted">
+            {{ cartData.length }} items
+          </div>
+        </div>
+      </div>
+
+      <div
+        *ngFor="let product of cartData"
+        class="row border-top border-bottom"
+      >
+        <div class="row text-muted">ProductId:{{ product?.productId }}</div>
+
+        <div class="row main align-items-center">
+          <div class="col-2">
+            <img class="img-fluid" [src]="product?.product?.image" />
+          </div>
+          <div class="col">
+            <div class="row text-muted">{{ product.product?.productName }}</div>
+            <div class="row">{{ product.product?.description }}</div>
+          </div>
+          <div class="col">
+            <!-- Quantity increment/decrement -->
+            <button (click)="decrementQuantity(product)">-</button>
+            <span class="border">{{ product.quantity }}</span>
+            <button (click)="incrementQuantity(product)">+</button>
+          </div>
+          <div class="col">
+            &euro; {{ product.product?.price * product.quantity }}
+            <span class="close" (click)="removeProductFromCart(product.id)"
+              >&#10005;</span
+            >
+          </div>
+        </div>
+      </div>
+
+      <div class="back-to-shop">
+        <a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span>
+      </div>
+    </div>
+
+    <div class="col-md-4 summary">
+      <div>
+        <h5><b>Summary</b></h5>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col" style="padding-left: 0">
+          ITEMS {{ cartData.length }}
+        </div>
+        <div class="col text-right">&euro; {{ getTotalPrice() }}</div>
+      </div>
+
+      <form>
+        <p>SHIPPING</p>
+        <select>
+          <option class="text-muted">Standard-Delivery- &euro;5.00</option>
+        </select>
+        <p>GIVE CODE</p>
+        <input id="code" placeholder="Enter your code" />
+      </form>
+
+      <div
+        class="row"
+        style="border-top: 1px solid rgba(0, 0, 0, 0.1); padding: 2vh 0"
+      >
+        <div class="col">TOTAL PRICE</div>
+        <div class="col text-right">&euro; {{ getTotalPrice() }}</div>
+      </div>
+      <button class="btn" (click)="Checkout(userId, orderItems)">
+        CHECKOUT
+      </button>
+    </div>
+  </div>
+</div>

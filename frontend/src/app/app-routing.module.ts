@@ -7,6 +7,9 @@ import { DashboardPanelProductsComponent } from './dashboard-panel-products/dash
 import { UsersComponent } from './dashboard-panel/users/users.component';
 import { ProductsComponent } from './products/products.component';
 import { OrderItemsComponent } from './order-items/order-items.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FooterComponent } from './footer/footer.component';
+import { ShopingcartComponent } from './shopingcart/shopingcart.component';
 const routes: Routes = [
   {
     path: '',
@@ -43,6 +46,18 @@ const routes: Routes = [
   {
     path: 'order-items',
     component: OrderItemsComponent,
+  },
+  {
+    path: 'navbar',
+    component: NavbarComponent,
+  },
+  {
+    path: 'footer',
+    component: FooterComponent,
+  },
+  {
+    path: 'shopingcart',
+    component: ShopingcartComponent,
   },
 ];
 @NgModule({
