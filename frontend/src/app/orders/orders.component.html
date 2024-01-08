@@ -1,0 +1,81 @@
+<router-outlet></router-outlet>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Orders List</h5>
+        </div>
+        <div class="card-body">
+          <div *ngIf="orders.length > 0">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Order ID</th>
+                  <th scope="col">User ID</th>
+                  <th scope="col">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let order of orders">
+                  <td>{{ order.id }}</td>
+                  <td>{{ order.userId }}</td>
+                  <td>{{ order.status }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<router-outlet></router-outlet>
+<div class="container mt-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Orders List</h5>
+        </div>
+        <div class="card-body">
+          <div class="input-group mb-3">
+            <input
+              type="number"
+              class="form-control"
+              placeholder="Enter Order ID"
+              [(ngModel)]="orderId"
+            />
+            <button
+              class="btn btn-primary"
+              type="button"
+              (click)="fetchOrderItems()"
+            >
+              Fetch Order Items
+            </button>
+          </div>
+          <div *ngIf="orderItems.length > 0">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Order ID</th>
+                  <th scope="col">Product ID</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let orderItem of orderItems">
+                  <td>{{ orderItem.orderId }}</td>
+                  <td>{{ orderItem.productId }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div *ngIf="orderItems.length === 0" class="text-center">
+            <p>No order items found for the given Order ID</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

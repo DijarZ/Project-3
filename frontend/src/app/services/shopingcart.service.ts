@@ -9,14 +9,20 @@ import { log } from 'console';
 export class ShopingcartService {
   private baseUrl = 'http://localhost:3000/shopingcart';
 
-  private token: string | null = null;
+  private tokenKey = 'auth_token';
 
   getToken(): string | null {
-    return this.token;
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem(this.tokenKey);
+    } else {
+      console.error('localStorage is not available in this environment');
+
+      return null;
+    }
   }
 
   constructor(private http: HttpClient, private authService: AuthService) {
-    this.token = this.authService.getToken();
+    this.tokenKey;
   }
 
   addProductToCart(
@@ -34,7 +40,7 @@ export class ShopingcartService {
 
     if (!userId) {
       console.error('User ID not found in token');
-      return of([]); // Return an empty observable or handle error accordingly
+      return of([]);
     }
 
     return this.http.get<any[]>(`${this.baseUrl}/cart/user/${userId}`);

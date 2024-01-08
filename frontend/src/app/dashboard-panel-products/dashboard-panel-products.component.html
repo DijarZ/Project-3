@@ -1,3 +1,75 @@
+<router-outlet></router-outlet>
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <h1 style="color: #1f5650"><b>Create Porduct</b></h1>
+
+      <form>
+        <div class="mb-3">
+          <label for="productName" class="form-label">Product Name</label>
+          <input
+            type="text"
+            id="productName"
+            class="form-control"
+            placeholder="Product Name"
+            [(ngModel)]="productName"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Description</label>
+          <input
+            type="text"
+            id="description"
+            class="form-control"
+            placeholder="Description"
+            [(ngModel)]="description"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="price" class="form-label">Price</label>
+          <input
+            type="number"
+            id="price"
+            class="form-control"
+            placeholder="Price"
+            [(ngModel)]="price"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="quantity" class="form-label">Quantity</label>
+          <input
+            type="number"
+            id="quantity"
+            class="form-control"
+            placeholder="Quantity"
+            [(ngModel)]="quantity"
+            [ngModelOptions]="{ standalone: true }"
+          />
+        </div>
+        <div class="mb-3">
+          <label for="image" class="form-label">Image</label>
+          <input
+            type="file"
+            id="image"
+            class="form-control"
+            (change)="onFileSelected($event)"
+            accept="image/*"
+          />
+        </div>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="createNewProduct()"
+        >
+          Create Product
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
 <main>
   <div
     class="container-fluid bg-trasparent my-4 p-3"
@@ -16,9 +88,7 @@
             </div>
             <h5 class="card-title">{{ product.description }}</h5>
             <p>{{ product.quantity }}</p>
-            <!-- Editing section for products -->
             <div *ngIf="isEditingProduct && selectedProductId === product.id">
-              <!-- Input fields for editing -->
               <input
                 type="text"
                 [(ngModel)]="product.productName"
@@ -54,38 +124,3 @@
     </div>
   </div>
 </main>
-
-<div>
-  <form>
-    <input
-      type="text"
-      placeholder="Product Name"
-      [(ngModel)]="productName"
-      [ngModelOptions]="{ standalone: true }"
-    /><br />
-    <input
-      type="text"
-      placeholder="Description"
-      [(ngModel)]="description"
-      [ngModelOptions]="{ standalone: true }"
-    /><br />
-    <input
-      type="number"
-      placeholder="Price"
-      [(ngModel)]="price"
-      [ngModelOptions]="{ standalone: true }"
-    /><br />
-    <input
-      type="number"
-      placeholder="Quantity"
-      [(ngModel)]="quantity"
-      [ngModelOptions]="{ standalone: true }"
-    /><br />
-    <input
-      type="file"
-      (change)="onFileSelected($event)"
-      accept="image/*"
-    /><br />
-    <button type="button" (click)="createNewProduct()">Create Product</button>
-  </form>
-</div>

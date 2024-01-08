@@ -1,88 +1,70 @@
-/* Resetting default margin and padding */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,400i,500");
+
+body {
+  overflow-x: hidden;
+  font-family: "Roboto", sans-serif;
+  font-size: 16px;
 }
 
-/* Styling for sidebar */
-.vertical-nav {
-  width: 250px;
-  height: 100vh;
-  background-color: #fff;
-  position: fixed;
-  top: 0;
-  left: 0;
-  padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+#viewport {
+  padding-left: 250px;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+}
+
+#content {
+  width: 100%;
+  position: relative;
+  margin-right: 0;
+}
+
+#sidebar {
   z-index: 1000;
-}
-
-.profile {
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.profile-picture {
-  border-radius: 50%;
-}
-
-.profile-info {
-  margin-left: 15px;
-}
-
-.sidebar-menu ul {
-  list-style: none;
-  padding: 0;
-}
-
-.sidebar-menu ul li {
-  margin-bottom: 10px;
-}
-
-.sidebar-menu ul li a {
-  text-decoration: none;
-  color: #333;
-  transition: color 0.3s ease;
-}
-
-.sidebar-menu ul li a:hover {
-  color: #f00;
-}
-
-/* Styling for content */
-.page-content {
-  margin-left: 250px; /* Same width as the sidebar */
-  padding: 20px;
-  transition: all 0.3s ease;
-}
-
-/* Styling for toggle button */
-.toggle-btn {
   position: fixed;
-  top: 20px;
-  left: 20px;
-  background-color: #fff;
-  border: none;
-  cursor: pointer;
-  z-index: 1100;
+  left: 250px;
+  width: 250px;
+  height: 100%;
+  margin-left: -250px;
+  overflow-y: auto;
+  background: #37474f;
+  -webkit-transition: all 0.5s ease;
+  -moz-transition: all 0.5s ease;
+  -o-transition: all 0.5s ease;
+  transition: all 0.5s ease;
 }
 
-/* Media query for responsiveness */
-@media screen and (max-width: 768px) {
-  .vertical-nav {
-    width: 100%;
-    height: auto;
-    position: relative;
-  }
+#sidebar header {
+  background-color: #1f5650;
+  font-size: 20px;
+  line-height: 52px;
+  text-align: center;
+}
 
-  .page-content {
-    margin-left: 0;
-  }
+#sidebar header a {
+  color: #fff;
+  display: block;
+  text-decoration: none;
+}
 
-  .toggle-btn {
-    display: block;
-  }
+#sidebar header a:hover {
+  color: #fff;
+}
+
+#sidebar .nav a {
+  background: none;
+  border-bottom: 1px solid #455a64;
+  color: #cfd8dc;
+  font-size: 14px;
+  padding: 16px 24px;
+}
+
+#sidebar .nav a:hover {
+  background: none;
+  color: #eceff1;
+}
+
+#sidebar .nav a i {
+  margin-right: 16px;
 }

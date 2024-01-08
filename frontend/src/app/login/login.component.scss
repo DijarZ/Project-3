@@ -1,22 +1,20 @@
 body {
   margin: 0;
   padding: 0;
-  background: url("https://i.ibb.co/VQmtgjh/6845078.png") no-repeat;
   height: 100vh;
   font-family: sans-serif;
   background-size: cover;
   background-position: center;
   overflow: hidden;
+  background-color: #1f5650;
 }
 
-/* Media query for smaller screens */
 @media screen and (max-width: 600px) {
   body {
     background-attachment: fixed;
   }
 }
 
-/* Login box styles */
 .loginBox {
   position: absolute;
   top: 50%;
@@ -24,7 +22,7 @@ body {
   transform: translate(-50%, -50%);
   width: 350px;
   min-height: 200px;
-  background: #000000;
+  background: #1f5650;
   border-radius: 10px;
   padding: 40px;
   box-sizing: border-box;
@@ -39,11 +37,10 @@ body {
 h3 {
   margin: 0;
   padding: 0 0 20px;
-  color: #fff; /* Changed to match registration form */
+  color: #fff;
   text-align: center;
 }
 
-/* Input styles */
 .loginBox input {
   width: 100%;
   margin-bottom: 20px;
@@ -52,7 +49,7 @@ h3 {
 .loginBox input[type="text"],
 .loginBox input[type="password"] {
   border: none;
-  border-bottom: 2px solid #42f3fa; /* Changed color */
+  border-bottom: 2px solid #1f5650;
   outline: none;
   height: 40px;
   color: #fff;
@@ -66,30 +63,28 @@ h3 {
 .loginBox input[type="password"]:hover {
   color: #42f3fa;
   border: 1px solid #42f3fa;
-  box-shadow: 0 0 5px rgba(0, 255, 0, 0.3), 0 0 10px rgba(0, 255, 0, 0.2),
+  box-shadow: 0 0 5px rgba(25, 121, 25, 0.3), 0 0 10px rgba(0, 255, 0, 0.2),
     0 0 15px rgba(0, 255, 0, 0.1), 0 2px 0 black;
 }
 
 .loginBox input[type="text"]:focus,
 .loginBox input[type="password"]:focus {
-  border-bottom: 2px solid #fff; /* Changed color */
+  border-bottom: 2px solid #fff;
 }
 
-/* Submit button styles */
 .loginBox input[type="submit"] {
   border: none;
   outline: none;
   height: 40px;
   font-size: 16px;
-  background: #42f3fa; /* Changed color */
+  background: #1f5650;
   color: #fff;
   border-radius: 20px;
   cursor: pointer;
 }
 
-/* Additional styles */
 .loginBox a {
-  color: #fff; /* Changed color */
+  color: #fff;
   font-size: 14px;
   font-weight: bold;
   text-decoration: none;
@@ -102,5 +97,5 @@ a:hover {
 }
 
 p {
-  color: #0000ff;
+  color: #0c9543;
 }

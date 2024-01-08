@@ -7,9 +7,11 @@ const registerUser = async function (req, res) {
   const { firstName, lastName, email, password, rolecode } = req.body;
   let userRole = "customer";
   try {
-    if (rolecode !== undefined && rolecode === 1111) {
+    if (rolecode !== undefined && rolecode === process.env.AdminCode) {
       userRole = "admin";
     }
+    console.log("User role set as 'admin'");
+
     const saltRounds = 10;
     const hashedPw = await bcrypt.hash(password, saltRounds);
     const createdUser = await prisma.users.create({
@@ -26,7 +28,7 @@ const registerUser = async function (req, res) {
     console.log("Registered User:", registerUser);
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Gabim gjatë regjistrimit të përdoruesit." });
+    res.status(500).json("Internal server error!");
   }
 };
 
@@ -59,7 +61,7 @@ const loginUser = async function (req, res) {
     res.status(200).json({ token });
   } catch (error) {
     console.log(error);
-    res.status(500).json({ error: "Gabim gjatë hyrjes së përdoruesit." });
+    res.status(500).json("Internal server error!");
   }
 };
 
@@ -82,7 +84,6 @@ const updateUser = async (req, res) => {
 
     const dataToUpdate = {};
 
-    // Check each field and add it to the update data if provided
     if (newName !== undefined) {
       dataToUpdate.firstName = newName;
     }
@@ -112,7 +113,7 @@ const updateUser = async (req, res) => {
     console.log("Updated User:", updatedUser);
   } catch (error) {
     console.error(error);
-    res.status(500).send("Gabim në server!");
+    res.status(500).json("Internal server error!");
   }
 };
 
@@ -122,12 +123,12 @@ const deleteUser = async (req, res) => {
 
     const user = await prisma.users.findUnique({
       where: {
-        id: parseInt(id), // Assuming id is a number; if it's a string, remove parseInt
+        id: parseInt(id),
       },
     });
-    //  if(!user){
-    //     return res.status(404).json("Perdoruesi nuk u gjet")
-    // }
+    if (!user) {
+      return res.status(404).json("Perdoruesi nuk u gjet");
+    }
     if (req.user.role !== "admin" && req.user.id !== user.id) {
       return res.status(403).send("Ju nuk keni te drejt per te bere kete");
     }
@@ -182,115 +183,3 @@ module.exports = {
   deleteUser,
   getUserById,
 };
-
-// const { PrismaClient } = require("@prisma/client");
-// const prisma = new PrismaClient();
-
-// const loginUser = (req, res) => {
-//   const { email, password } = req.body;
-//   const user = users.find((u) => u.email === email && u.password === password);
-
-//   if (!user) {
-//     return res
-//       .status(401)
-//       .json({ message: "Autentikimi dështoi. Provoni përsëri." });
-//   }
-
-//   res.status(200).json({ message: "Autentikimi u krye me sukses!", user });
-// };
-
-// const createUser = async (req, res) => {
-//   try {
-//     const { firstName, lastName, email, password, rolecode } = req.body;
-//     if (rolecode !== undefined && rolecode === 1111) {
-//       const createAdmin = await prisma.users.create({
-//         data: {
-//           firstName,
-//           lastName,
-//           email,
-//           password,
-//           role: "admin",
-//         },
-//       });
-//       res.json(createAdmin);
-//     } else {
-//       const createCustomer = await prisma.users.create({
-//         data: {
-//           firstName,
-//           lastName,
-//           email,
-//           password,
-//           role: "customer",
-//         },
-//       });
-//       res.json(createCustomer);
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("Internal server error!");
-//   }
-// };
-
-// const updateUser = async (req, res) => {
-//   const currentUser = req.body; // User information to be updated
-
-//   try {
-//     const user = await prisma.users.findUnique({
-//       where: {
-//         firstName: currentUser.firstName,
-//         lastName: currentUser.lastName,
-//         email: currentUser.email,
-//       },
-//     });
-
-//     if (!user) {
-//       return res.status(404).json({ message: "User not found." });
-//     }
-
-//     if (user.role === "admin") {
-//       // Admin can update all users' information
-//       const updatedUsers = await prisma.users.updateMany({
-//         where: {}, // Empty object matches all records
-//         data: {
-//           firstName: currentUser.newFirstName || prisma.users.firstName,
-//           lastName: currentUser.newLastName || prisma.users.lastName,
-//           email: currentUser.newEmail || prisma.users.email,
-//         },
-//       });
-
-//       res
-//         .status(200)
-//         .json({ message: "Users updated successfully!", updatedUsers });
-//     } else if (user.id === userIdToUpdate) {
-//       // Non-admin user can update only their own information
-//       const updatedUser = await prisma.users.update({
-//         where: {
-//           id: userIdToUpdate,
-//         },
-//         data: {
-//           firstName: currentUser.newFirstName || user.firstName,
-//           lastName: currentUser.newLastName || user.lastName,
-//           email: currentUser.newEmail || user.email,
-//         },
-//       });
-
-//       res
-//         .status(200)
-//         .json({ message: "User updated successfully!", updatedUser });
-//     } else {
-//       res
-//         .status(403)
-//         .json({ message: "You don't have permission for this action." });
-//     }
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).send("Error while updating user(s).");
-//   }
-// };
-
-// module.exports = {
-//   createUser,
-//   getUsers,
-//   updateUser,
-//   loginUser,
-// };

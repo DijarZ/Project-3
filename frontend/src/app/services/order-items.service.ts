@@ -8,34 +8,37 @@ import { AuthService } from './auth.service';
 })
 export class OrderItemsService {
   private baseUrl = 'http://localhost:3000/orders';
-  private token: string | null = null; // Initialize token as null
   private tokenKey = 'auth_token';
 
-  constructor(private http: HttpClient, private authService: AuthService) {
-    this.retrieveToken();
-  }
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
-  // Retrieve token from AuthService
-  private retrieveToken(): void {
-    this.token = this.authService.getToken();
+  getToken(): string | null {
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem(this.tokenKey);
+    } else {
+      console.error('localStorage is not available in this environment');
+      return null;
+    }
   }
   storeToken(token: string) {
     localStorage.setItem(this.tokenKey, token);
   }
   getOrdersByUserId(): Observable<any[]> {
-    const httpOptions = this.token
-      ? {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${this.token}`,
-          }),
-        }
-      : {};
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.getToken()}`,
+      }),
+    };
+
     return this.http.get<any[]>(`${this.baseUrl}/getOrders/user`, httpOptions);
+  }
+  getOrders(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/getorders`);
   }
 
   getOrderItems(orderId: number): Observable<any[]> {
-    return this.http.get<any[]>(`${this.baseUrl}/orderItems/${orderId}`);
+    return this.http.get<any[]>(`${this.baseUrl}/orders/details/${orderId}`);
   }
 
   createOrders(userId: number, orderItems: any[]): Observable<any> {
@@ -47,7 +50,7 @@ export class OrderItemsService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.token}`,
+        Authorization: `Bearer ${this.getToken()}`,
       }),
     };
 
@@ -66,7 +69,7 @@ export class OrderItemsService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${this.token}`,
+        Authorization: `Bearer ${this.getToken()}`,
       }),
     };
     return this.http.post<any>(

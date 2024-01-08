@@ -1,26 +1,24 @@
-import { Component } from '@angular/core';
-import { DataService } from '../services/data.service';
+import { Component, OnInit } from '@angular/core';
+import AOS from 'aos';
+import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
 })
-export class NavbarComponent {
-  searchQuery: string = '';
-  constructor(private dataService: DataService) {}
+export class NavbarComponent implements OnInit {
+  constructor(private authService: AuthService) {}
 
-  searchProducts(): void {
-    if (this.searchQuery.trim() !== '') {
-      this.dataService.getProductsByName(this.searchQuery).subscribe(
-        (data: any) => {
-          // Handle the fetched products data here
-          console.log('Fetched Products:', data);
-          // You can emit an event or store the data for further processing
-        },
-        (error: any) => {
-          console.error(error);
-        }
-      );
-    }
+  Logout() {
+    this.authService.logoutUser();
+  }
+  ngOnInit(): void {
+    AOS.init({
+      offset: 100,
+      duration: 800,
+      easing: 'ease-in-out',
+      delay: 200,
+      once: true,
+    });
   }
 }

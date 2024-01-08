@@ -2,7 +2,8 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: 20px;
+  margin-bottom: 5%;
+  margin-top: 5%;
 }
 
 .search-input {
@@ -18,4 +19,9 @@
   padding: 8px 16px;
   border-radius: 4px;
   font-size: 16px;
+}
+.btn-primary {
+  background-color: #1f5650;
+  border-color: gray;
+  border-radius: 1px;
 }

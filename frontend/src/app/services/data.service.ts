@@ -7,16 +7,20 @@ import { AuthService } from './auth.service';
 })
 export class DataService {
   private baseUrl = 'http://localhost:3000';
-  private token: string | null = null;
+  private tokenKey = 'auth_token';
 
   constructor(private http: HttpClient, private authService: AuthService) {
-    // Merr tokenin nga AuthService kur inicializohet DataService
-    this.token = this.authService.getToken();
+    this.tokenKey;
   }
 
-  // Metoda për të marrë tokenin nga AuthService
   getToken(): string | null {
-    return this.token;
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem(this.tokenKey);
+    } else {
+      console.error('localStorage is not available in this environment');
+
+      return null;
+    }
   }
 
   getUsers(): Observable<any> {
@@ -24,15 +28,12 @@ export class DataService {
   }
 
   deleteUser(id: string): Observable<any> {
-    // Krijimi i objektit të header-it vetëm nëse token ekziston
-    const httpOptions = this.token
-      ? {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${this.token}`,
-          }),
-        }
-      : {};
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.getToken()}`,
+      }),
+    };
 
     return this.http.delete<any>(
       `${this.baseUrl}/deleteUser/${id}`,
@@ -48,11 +49,9 @@ export class DataService {
     newPw: string | null,
     newRole: string | null
   ): Observable<any> {
-    const authToken = localStorage.getItem('auth_token');
-
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${this.getToken()}`,
     });
 
     const data = {
@@ -69,11 +68,9 @@ export class DataService {
   }
 
   getUserById(userId: string): Observable<any> {
-    // Adjust the API endpoint as per your backend route for fetching user details
     return this.http.get<any>(`${this.baseUrl}/getUserById/${userId}`);
   }
 
-  //Products
   getProducts(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/getProducts`, {});
   }
@@ -84,15 +81,12 @@ export class DataService {
     return this.http.get<any>(`${this.baseUrl}/getProducts/ByName/${name}`);
   }
   deleteProduct(id: string): Observable<any> {
-    // Krijimi i objektit të header-it vetëm nëse token ekziston
-    const httpOptions = this.token
-      ? {
-          headers: new HttpHeaders({
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${this.token}`,
-          }),
-        }
-      : {};
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${this.getToken()}`,
+      }),
+    };
 
     return this.http.delete<any>(
       `${this.baseUrl}/deleteProduct/${id}`,
@@ -107,11 +101,9 @@ export class DataService {
     price: number | null,
     imageFile: File
   ): Observable<any> {
-    const authToken = localStorage.getItem('auth_token');
-
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${this.getToken()}`,
     });
 
     const data = {
@@ -136,11 +128,9 @@ export class DataService {
     productId: string,
     quantity: number
   ): Observable<any> {
-    const authToken = localStorage.getItem('auth_token');
-
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
-      Authorization: `Bearer ${authToken}`,
+      Authorization: `Bearer ${this.getToken()}`,
     });
 
     const data = {
@@ -149,17 +139,13 @@ export class DataService {
       quantity,
     };
 
-    return this.http.put<any>(
-      `${this.baseUrl}/updateProduct`, // Replace with your actual API endpoint
-      data,
-      {
-        headers,
-      }
-    );
+    return this.http.put<any>(`${this.baseUrl}/updateProduct`, data, {
+      headers,
+    });
   }
 
   createProduct(productData: any): Observable<any> {
-    const headers = new HttpHeaders(); // Add headers if needed
+    const headers = new HttpHeaders();
 
     return this.http.post<any>(`${this.baseUrl}/createProduct`, productData, {
       headers,

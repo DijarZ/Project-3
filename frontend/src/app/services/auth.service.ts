@@ -36,7 +36,6 @@ export class AuthService {
     if (typeof localStorage !== 'undefined') {
       return localStorage.getItem(this.tokenKey);
     } else {
-      // Handle the case where localStorage is not available
       console.error('localStorage is not available in this environment');
 
       return null;
@@ -47,7 +46,7 @@ export class AuthService {
     const token = this.getToken();
     if (token) {
       try {
-        const decodedToken = jwtDecode(token) as any; //{ role?: string }
+        const decodedToken = jwtDecode(token) as any;
         const userId = decodedToken?.id || null;
         return userId;
       } catch (error) {
@@ -61,7 +60,7 @@ export class AuthService {
     const token = this.getToken();
     if (token) {
       try {
-        const decodedToken = jwtDecode(token) as any; //{ role?: string }
+        const decodedToken = jwtDecode(token) as any;
         console.log('Decoded Token:', decodedToken);
 
         const userRole = decodedToken?.role || null;
@@ -77,7 +76,7 @@ export class AuthService {
   redirectBasedOnRole() {
     const userRole = this.getUserRole();
     if (userRole === 'admin') {
-      this.router.navigate(['/dashboard-panel']);
+      this.router.navigate(['/dashboard-panel/dashboard-panel-products']);
     } else if (userRole === 'customer') {
       this.router.navigate(['/products']);
     } else {

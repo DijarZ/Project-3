@@ -21,16 +21,13 @@ export class LoginComponent {
       this.authService.loginUser(userData).subscribe(
         (response: any) => {
           const token = response.token;
-          this.authService.storeToken(token); // Storing the token in localStorage
+          this.authService.storeToken(token);
 
-          // Log to check if the token is retrieved and stored properly
           console.log('Token received:', token);
 
-          // Attempt to get the user role after storing the token
           const userRole = this.authService.getUserRole();
           console.log('User Role:', userRole);
 
-          // Redirect based on user role
           this.authService.redirectBasedOnRole();
         },
         (error: any) => {

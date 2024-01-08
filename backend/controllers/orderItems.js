@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 const getOrderItems = async (req, res) => {
   try {
     const { orderId } = req.params;
-    const orderItems = await prisma.orderItems.findUnique({
+    const orderItems = await prisma.orderItems.findMany({
       where: { orderId: parseInt(orderId) },
     });
     if (!orderItems) {
@@ -23,10 +23,10 @@ const getOrderItems = async (req, res) => {
 const createOrderItems = async (req, res) => {
   try {
     const { orderId, orderItems } = req.body;
-
+    const userId = req.user.id;
+    console.log(userId);
     for (const item of orderItems) {
-      // Calculate totalAmount based on the price and quantity of the product
-      const totalAmount = item.product.price * item.Quantity; // Example calculation, adjust according to your data model
+      const totalAmount = item.product.price * item.Quantity;
       console.log(totalAmount);
       await prisma.orderItems.create({
         data: {
@@ -41,6 +41,9 @@ const createOrderItems = async (req, res) => {
       where: { id: orderId },
       data: { status: "Completed" },
     });
+
+    await prisma.shopingCart.deleteMany({ where: { userId: userId } });
+
     res.status(200).json({ message: "Order items created successfully" });
   } catch (error) {
     console.error(error);
@@ -66,60 +69,9 @@ const removeProductFromOrder = async (req, res) => {
     res.status(500).send("Internal server Error");
   }
 };
-const addProductToOrder = async (req, res) => {
-  try {
-    // Extract necessary data from the request body
-    const { orderId, productId, quantity } = req.body;
-
-    // Validate if orderId, productId, and quantity are present
-    if (!orderId || !productId || !quantity) {
-      return res.status(400).json({
-        error:
-          "Incomplete data. Please provide orderId, productId, and quantity.",
-      });
-    }
-
-    // Fetch the order based on orderId from the database
-    const order = await prisma.orders.findUnique({
-      where: { id: parseInt(orderId) },
-    });
-
-    // Check if the order exists
-    if (!order) {
-      return res.status(404).json({ error: "Order not found." });
-    }
-
-    // Fetch the product based on productId from the database
-    const product = await prisma.products.findUnique({
-      where: { id: parseInt(productId) },
-    });
-
-    // Check if the product exists
-    if (!product) {
-      return res.status(404).json({ error: "Product not found." });
-    }
-
-    // Add the product to the order items with the specified quantity
-    const newOrderItem = await prisma.orderItems.create({
-      data: {
-        orderId: parseInt(orderId),
-        productId: parseInt(productId),
-        quantity: parseInt(quantity),
-        // Additional details as required
-      },
-    });
-
-    // Return the newly added order item
-    res.status(201).json(newOrderItem);
-  } catch (error) {
-    console.error("Error adding products to order:", error);
-    res.status(500).send("Internal server error");
-  }
-};
 
 module.exports = {
   getOrderItems,
   removeProductFromOrder,
-  addProductToOrder,
   createOrderItems,
 };

@@ -20,8 +20,6 @@ export class DashboardPanelProductsComponent {
     this.fetchProducts();
   }
 
-  //PRODUCTS
-
   product: any = {
     productId: '',
     productName: '',
@@ -33,11 +31,10 @@ export class DashboardPanelProductsComponent {
   fetchProducts(): void {
     this.dataService.getProducts().subscribe(
       (products) => {
-        this.products = products; // Assign products data to component variable
-        this.ImagePaths(); // Method to adjust image paths
+        this.products = products;
+        this.ImagePaths();
 
         console.log('Products:', products);
-        // Process products data here
       },
       (error) => {
         console.error('Error fetching products:', error);
@@ -49,9 +46,7 @@ export class DashboardPanelProductsComponent {
     const baseUrl = 'http://localhost:3000/images/';
 
     this.products.forEach((product) => {
-      // Check if the image path is an absolute URL (starts with 'http')
       if (!product.image.startsWith('http')) {
-        // If it's not an absolute URL, prepend the base URL
         product.image = baseUrl + product.image;
       }
     });
@@ -61,7 +56,7 @@ export class DashboardPanelProductsComponent {
       (products) => {
         this.products = products;
         console.log('Product deleted:', products);
-        this.fetchProducts(); //to refersh automaticlly page to delete user
+        this.fetchProducts();
         this.showMessage('Product deleted successfully');
       },
       (error) => {
@@ -133,20 +128,19 @@ export class DashboardPanelProductsComponent {
         (updatedProduct: any) => {
           console.log('Product updated:', updatedProduct);
           this.product = updatedProduct;
-          this.fetchProducts(); // Refresh products after update
+          this.fetchProducts();
           this.showMessage('Product updated successfully');
           this.isEditingProduct = false;
         },
         (error: any) => {
           console.error('Error updating product:', error);
-          // Handle error if product update fails (e.g., display error message)
         }
       );
   }
 
   showMessage(message: string): void {
     const config = new MatSnackBarConfig();
-    config.duration = 3000; // Set the duration for the snackbar
+    config.duration = 3000;
     this.snackBar.open(message, 'Close', config);
   }
 
@@ -157,7 +151,6 @@ export class DashboardPanelProductsComponent {
   image: File | null = null;
 
   onFileSelected(event: any): void {
-    // Retrieve the selected file from the input field
     if (event.target.files.length > 0) {
       this.image = event.target.files[0];
     }
@@ -192,7 +185,6 @@ export class DashboardPanelProductsComponent {
       },
       (error) => {
         console.error('Error creating product:', error);
-        // Handle error: display an error message or perform specific actions
       }
     );
   }

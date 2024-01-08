@@ -1,3 +1,4 @@
+<router-outlet></router-outlet>
 <div class="register-photo">
   <div class="form-container">
     <form #registerForm="ngForm" (ngSubmit)="createAccount()">
@@ -51,7 +52,9 @@
           Sign Up
         </button>
       </div>
-      <a class="already" href="#">You already have an account? Login here.</a>
+      <a class="already" routerLink="/dashboard-panel" class="nav-link"
+        >You already have an account? Login here.</a
+      >
     </form>
   </div>
 </div>

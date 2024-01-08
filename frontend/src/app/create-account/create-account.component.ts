@@ -13,7 +13,7 @@ export class CreateAccountComponent {
   lastName: string = '';
   email: string = '';
   password: string = '';
-  showSuccessModal: boolean = false; // Declare showSuccessModal property
+  showSuccessModal: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -30,7 +30,6 @@ export class CreateAccountComponent {
 
     this.authService.registerUser(userData).subscribe(
       (response: any) => {
-        // Handle successful registration
         alert(
           'User created successfully! You will be redirected to the login page.'
         );
@@ -40,10 +39,9 @@ export class CreateAccountComponent {
       },
 
       (error: any) => {
-        // Handle registration error
         console.error('Registration error:', error);
         this.toastr.error('User creation failed!', 'Error');
-        this.showSuccessModal = false; // Hide success modal on registration error
+        this.showSuccessModal = false;
       }
     );
   }

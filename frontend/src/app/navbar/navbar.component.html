@@ -1,9 +1,8 @@
 <div class="container-fluid px-0">
   <header>
     <div class="shape"></div>
-    <!-- Navbar -->
     <nav class="navbar fixed-top navbar-expand-lg navbar-transparent">
-      <a class="navbar-brand" href="#">SPORT SHOES</a>
+      <a class="navbar-brand" href="products">Gastronova</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -18,16 +17,26 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#"
-              >HOME <span class="sr-only">(current)</span></a
-            >
+            <a class="nav-link" routerLink="products">Home</a>
           </li>
-          <li class="nav-item"><a class="nav-link" href="#">MEN</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">WOMEN</a></li>
+          <li class="nav-item"><a class="nav-link" href="/About">About</a></li>
+          <li class="nav-item"></li>
         </ul>
+        <div
+          class="d-flex flex-column flex-lg-row align-items-end mt-2 mt-lg-0"
+        >
+          <button
+            class="btn btn-info btn-sm mb-2 mb-lg-0 me-lg-2"
+            [routerLink]="'/shopingcart'"
+          >
+            Cart
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="Logout()">
+            Logout
+          </button>
+        </div>
       </div>
     </nav>
-    <!-- ./ end of navbar -->
     <div
       id="carouselExampleCaptions"
       class="carousel slide"
@@ -63,8 +72,10 @@
           "
         >
           <div class="carousel-caption">
-            <h5>First slide label</h5>
-            <p>Some representative placeholder content for the first slide.</p>
+            <h2 data-aos="fade-up" data-aos-duration="2000">
+              Cooking Elegance Daily
+            </h2>
+            <p>Image of a modern kitchen with sleek utensils and cookware</p>
           </div>
         </div>
         <div
@@ -74,8 +85,13 @@
           "
         >
           <div class="carousel-caption">
-            <h5>Second slide label</h5>
-            <p>Some representative placeholder content for the second slide.</p>
+            <h2 data-aos="fade-up" data-aos-duration="2000">
+              Displaying a diverse range of kitchen gadgets and appliances
+            </h2>
+            <p>
+              Where Culinary Inspiration Meets Quality; Unleash Your Culinary
+              Potential with Our Range of Premium Kitchenware
+            </p>
           </div>
         </div>
         <div
@@ -85,8 +101,14 @@
           "
         >
           <div class="carousel-caption">
-            <h5>Third slide label</h5>
-            <p>Some representative placeholder content for the third slide.</p>
+            <h2 data-aos="fade-up" data-aos-duration="1000">
+              Presenting a chef using the company's products to cook a gourmet
+              meal
+            </h2>
+            <p>
+              Elevate Your Kitchen Experience: From Utensils to Gadgets,
+              Discover Our Collection Catering to Every Chef's Need.
+            </p>
           </div>
         </div>
       </div>

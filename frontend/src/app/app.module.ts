@@ -22,6 +22,10 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { FooterComponent } from './footer/footer.component';
 import { ShopingcartComponent } from './shopingcart/shopingcart.component';
+import { CreateUserAdminComponent } from './dashboard-panel/users/create-user-admin/create-user-admin.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { AboutComponent } from './about/about.component';
+import { OrdersComponent } from './orders/orders.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +39,10 @@ import { ShopingcartComponent } from './shopingcart/shopingcart.component';
     NavbarComponent,
     FooterComponent,
     ShopingcartComponent,
+    CreateUserAdminComponent,
+    NavBarComponent,
+    AboutComponent,
+    OrdersComponent,
   ],
   imports: [
     BrowserModule,

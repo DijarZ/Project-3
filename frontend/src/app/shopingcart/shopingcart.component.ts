@@ -20,18 +20,20 @@ export class ShopingcartComponent {
     private orderItemsServie: OrderItemsService,
     private router: Router,
     private snackBar: MatSnackBar
-  ) {}
-
+  ) {
+    this.showCart = false;
+  }
+  ngOnInit(): void {
+    this.getCart();
+  }
   getCart(): void {
     if (!this.showCart) {
       this.cartData = [];
-      this.showCart = false;
 
       this.shopingcartService.getCartByUserId().subscribe(
         (data) => {
           this.cartData = data;
 
-          this.showCart = true;
           console.log('Cart Data:', this.cartData);
         },
         (error) => {
@@ -39,7 +41,7 @@ export class ShopingcartComponent {
         }
       );
     } else {
-      this.showCart = false;
+      this.showCart = true;
     }
   }
 
@@ -48,7 +50,7 @@ export class ShopingcartComponent {
       (removedProduct) => {
         console.log('Product removed from cart:', removedProduct);
         this.getCart();
-        this.showMessage('Product deleted successfully');
+        this.showMessage('Product deleted successfully!');
         this.updateCart;
         this.cartData;
       },
@@ -63,7 +65,6 @@ export class ShopingcartComponent {
     this.orderItemsServie.createOrders(userId, orderItems).subscribe(
       (response) => {
         if (response && response.orderId) {
-          // Change this to response.orderId
           const orderId = response.orderId;
           console.log('Order created with ID:', orderId);
           setTimeout(() => {
@@ -81,18 +82,16 @@ export class ShopingcartComponent {
           'Error processing checkout your token is expired or any other problem',
           error
         );
-        // Handle error scenario
       }
     );
   }
 
   showMessage(message: string): void {
     const config = new MatSnackBarConfig();
-    config.duration = 3000; // Set the duration for the snackbar
+    config.duration = 3000;
     this.snackBar.open(message, 'Close', config);
   }
 
-  // Increment quantity of a product in the cart
   decrementQuantity(product: any) {
     if (product.quantity > 1) {
       product.quantity--;
@@ -107,16 +106,14 @@ export class ShopingcartComponent {
     this.shopingcartService.updateCart().subscribe(
       (updatedProduct: any) => {
         console.log('Cart updated with:', updatedProduct);
-        this.getCart(); // Refresh cart data after update
+        this.getCart();
       },
       (error: any) => {
         console.error('Error updating cart:', error);
-        // Handle error scenario
       }
     );
   }
 
-  // Calculate total price of items in the cart
   getTotalPrice(): number {
     let totalPrice = 0;
     this.cartData.forEach((product) => {

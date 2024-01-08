@@ -1,0 +1,41 @@
+<div class="container-fluid px-0">
+  <header>
+    <div class="shape"></div>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-transparent">
+      <a class="navbar-brand" href="products">Gastronova</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" routerLink="products">Home</a>
+          </li>
+          <li class="nav-item"><a class="nav-link" href="/About">About</a></li>
+          <li class="nav-item"></li>
+        </ul>
+        <div
+          class="d-flex flex-column flex-lg-row align-items-end mt-2 mt-lg-0"
+        >
+          <button
+            class="btn btn-info btn-sm mb-2 mb-lg-0 me-lg-2"
+            [routerLink]="'/shopingcart'"
+          >
+            Cart
+          </button>
+          <button class="btn btn-danger btn-sm" (click)="Logout()">
+            Logout
+          </button>
+        </div>
+      </div>
+    </nav>
+  </header>
+</div>

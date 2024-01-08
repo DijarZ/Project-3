@@ -21,7 +21,7 @@ const createProduct = async (req, res) => {
       const { description, productName, price, quantity } = req.body;
       const parsedPrice = parseInt(price, 10);
       const parsedQuantity = parseInt(quantity, 10);
-      const image = req.file ? req.file.filename : ""; // Retrieve uploaded image filename
+      const image = req.file ? req.file.filename : "";
       const products = await prisma.products.create({
         data: {
           productName,
@@ -57,7 +57,7 @@ const updateProduct = async (req, res) => {
         data: {
           productName,
           description,
-          price: isNaN(parsedPrice) ? undefined : parsedPrice, // Check if parsedPrice is a valid number
+          price: isNaN(parsedPrice) ? undefined : parsedPrice,
           quantity: parseInt(quantity),
           image: req.file ? `/images/${req.file.filename}` : undefined,
         },
@@ -81,7 +81,7 @@ const deleteProduct = async (req, res) => {
     console.log(("Deleted Product:", deletedProduct));
     res.json(deletedProduct);
   } catch (error) {
-    error("Error deleting Product:", error);
+    console.error("Error deleting Product:", error);
     res.status(500).send("Internal server Error");
   }
 };
@@ -99,11 +99,11 @@ const getProducts = async (req, res) => {
 
 const getProductsByName = async (req, res) => {
   try {
-    const { name } = req.params; // Fetch the name from query parameters
+    const { name } = req.params;
     const productsByName = await prisma.products.findMany({
       where: {
         productName: {
-          contains: name, // Filtering products by name
+          contains: name,
         },
       },
     });

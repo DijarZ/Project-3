@@ -23,10 +23,9 @@ export class ProductsComponent {
   orderId: any;
   fetchedProducts: any[] = [];
   searchQuery: string = '';
-  originalProducts: any[] = []; // Add a property to store the original list of products
+  originalProducts: any[] = [];
   isSearchMode: boolean | undefined;
-  allProducts: any[] = []; // Combined array of products and fetchedProducts
-
+  allProducts: any[] = [];
   constructor(
     private dataService: DataService,
     private snackBar: MatSnackBar,
@@ -39,7 +38,6 @@ export class ProductsComponent {
   ngOnInit(): void {
     this.fetchProducts();
     this.originalProducts = this.products.slice();
-    //get userId from token to addproduct on shopingcart
     const userId = this.authService.getUserIdFromToken();
     console.log('User ID:', userId);
 
@@ -78,11 +76,10 @@ export class ProductsComponent {
   fetchProducts(): void {
     this.dataService.getProducts().subscribe(
       (products) => {
-        this.products = products; // Assign products data to component variable
-        this.ImagePaths(); // Method to adjust image paths
+        this.products = products;
+        this.ImagePaths();
 
         console.log('Products:', products);
-        // Process products data here
       },
       (error) => {
         console.error('Error fetching products:', error);
@@ -94,9 +91,7 @@ export class ProductsComponent {
     const baseUrl = 'http://localhost:3000/images/';
 
     this.products.forEach((product) => {
-      // Check if the image path is an absolute URL (starts with 'http')
       if (!product.image.startsWith('http')) {
-        // If it's not an absolute URL, prepend the base URL
         product.image = baseUrl + product.image;
       }
     });
@@ -104,7 +99,7 @@ export class ProductsComponent {
 
   showMessage(message: string): void {
     const config = new MatSnackBarConfig();
-    config.duration = 3000; // Set the duration for the snackbar
+    config.duration = 3000;
     this.snackBar.open(message, 'Close', config);
   }
 
@@ -113,18 +108,15 @@ export class ProductsComponent {
       console.error('User ID is invalid or not found');
       return;
     }
-    // Add logic to add the product to the cart using the ShopingcartService
     this.shopingcartService
       .addProductToCart(this.currentUser.userId, productId, quantity)
       .subscribe(
         (response) => {
-          // Handle success, if needed
           console.log('Product added to cart:', response);
           this.showMessage('Porduct added succesfully on cart');
           this.getCart;
         },
         (error) => {
-          // Handle error, if needed
           console.error('Error adding product to cart:', error);
           console.log(error);
         }
@@ -133,14 +125,14 @@ export class ProductsComponent {
 
   getCart(): void {
     if (!this.showCart) {
-      this.cartData = [true]; // Reset cartData before fetching cart data
-      this.showCart = false; // Hide cart until data is fetched
+      this.cartData = [true];
+      this.showCart = false;
 
       this.shopingcartService.getCartByUserId().subscribe(
         (data) => {
           this.cartData = data;
 
-          this.showCart = true; // Set showCart to true when cart data is fetched
+          this.showCart = true;
           console.log('Cart Data:', this.cartData);
         },
         (error) => {
@@ -148,7 +140,7 @@ export class ProductsComponent {
         }
       );
     } else {
-      this.showCart = false; // Hide cart when the button is clicked again
+      this.showCart = false;
     }
   }
 
@@ -166,31 +158,6 @@ export class ProductsComponent {
     );
   }
 
-  // Checkout(userId: number, orderItems: any[]): void {
-  //   this.orderItemsServie.createOrders(userId, orderItems).subscribe(
-  //     (response) => {
-  //       if (response && response.orderId) {
-  //         // Change this to response.orderId
-  //         const orderId = response.orderId;
-  //         console.log('Order created with ID:', orderId);
-  //         setTimeout(() => {
-  //           this.router.navigate(['/order-items'], {
-  //             queryParams: { orderId },
-  //           });
-  //         }, 2000);
-  //       } else {
-  //         console.error('Invalid response structure. Order ID not found.');
-  //       }
-  //     },
-  //     (error) => {
-  //       console.error(
-  //         'Error processing checkout your token is expired or any other problem',
-  //         error
-  //       );
-  //       // Handle error scenario
-  //     }
-  //   );
-  // }
   getDisplayedProducts(): any[] {
     return this.searchQuery ? this.fetchedProducts : this.products;
   }
@@ -202,10 +169,10 @@ export class ProductsComponent {
           .toLowerCase()
           .includes(this.searchQuery.toLowerCase())
       );
-      this.isSearchMode = true; // Set search mode to true
+      this.isSearchMode = true;
     } else {
       this.fetchedProducts = [];
-      this.isSearchMode = false; // Set search mode to false when the search query is empty
+      this.isSearchMode = false;
     }
   }
 
@@ -213,7 +180,7 @@ export class ProductsComponent {
     this.dataService.getProductsByName(name).subscribe(
       (fetchedProducts) => {
         this.fetchedProducts = fetchedProducts;
-        this.products = this.combineProducts(); // Combine fetched and original products
+        this.products = this.combineProducts();
       },
       (error) => {
         console.error('Error fetching searched products:', error);
@@ -223,20 +190,7 @@ export class ProductsComponent {
   }
 
   combineProducts(): any[] {
-    // Merge products and fetchedProducts into allProducts array
     this.allProducts = [...this.originalProducts, ...this.fetchedProducts];
     return this.allProducts;
   }
 }
-// createOrderItems(orderId: number, orderItems: any[]): void {
-//   this.orderItemsServie.createOrderItems(orderId, orderItems).subscribe(
-//     (response: any) => {
-//       console.log('Order items created:', response);
-//       // Handle success (if needed)
-//     },
-//     (error: any) => {
-//       console.error('Error creating order items:', error);
-//       // Handle error scenario
-//     }
-//   );
-// }

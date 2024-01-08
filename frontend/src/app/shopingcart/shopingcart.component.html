@@ -1,3 +1,4 @@
+<app-nav-bar></app-nav-bar>
 <div class="card">
   <div class="row">
     <div class="col-md-8 cart">
@@ -5,7 +6,7 @@
         <div class="row">
           <div class="col">
             <button class="btn btn-info mt-3" (click)="getCart()">
-              Shopping Cart
+              Show Shopping Cart
             </button>
           </div>
           <div class="col align-self-center text-right text-muted">
@@ -18,18 +19,15 @@
         *ngFor="let product of cartData"
         class="row border-top border-bottom"
       >
-        <div class="row text-muted">ProductId:{{ product?.productId }}</div>
-
         <div class="row main align-items-center">
           <div class="col-2">
-            <img class="img-fluid" [src]="product?.product?.image" />
+            <div class="row text-muted">ProductId:{{ product?.productId }}</div>
           </div>
           <div class="col">
             <div class="row text-muted">{{ product.product?.productName }}</div>
             <div class="row">{{ product.product?.description }}</div>
           </div>
           <div class="col">
-            <!-- Quantity increment/decrement -->
             <button (click)="decrementQuantity(product)">-</button>
             <span class="border">{{ product.quantity }}</span>
             <button (click)="incrementQuantity(product)">+</button>
@@ -44,7 +42,8 @@
       </div>
 
       <div class="back-to-shop">
-        <a href="#">&leftarrow;</a><span class="text-muted">Back to shop</span>
+        <a href="products">&leftarrow;</a
+        ><span class="text-muted">Back to shop</span>
       </div>
     </div>
 
@@ -63,7 +62,7 @@
       <form>
         <p>SHIPPING</p>
         <select>
-          <option class="text-muted">Standard-Delivery- &euro;5.00</option>
+          <option class="text-muted">Standard-Delivery- &euro;0</option>
         </select>
         <p>GIVE CODE</p>
         <input id="code" placeholder="Enter your code" />
@@ -77,8 +76,10 @@
         <div class="col text-right">&euro; {{ getTotalPrice() }}</div>
       </div>
       <button class="btn" (click)="Checkout(userId, orderItems)">
-        CHECKOUT
+        CONTINUE TO CHECKOUT
       </button>
     </div>
   </div>
 </div>
+
+<app-footer></app-footer>

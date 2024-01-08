@@ -41,6 +41,7 @@ enum Role{
   updatedAt      DateTime @updatedAt
   OrderItems    OrderItems[]
   ShopingCart   ShopingCart[]
+  
  }
 
  model Orders{
@@ -58,16 +59,18 @@ enum Role{
   productId Int
   Quantity  Int
   totalAmount  Float
+  createdAt  DateTime @default(now())
   order     Orders      @relation(fields: [orderId],references: [id],onDelete: Cascade)
-  product   Products    @relation(fields: [productId],references: [id])
+  product   Products    @relation(fields: [productId],references: [id], onDelete: Cascade)
   
  }
 
  model ShopingCart{
-  id          Int     @id @default(autoincrement())
-  userId      Int
-  productId   Int
-  quantity    Int      
+  id               Int     @id @default(autoincrement())
+  userId          Int
+  productId       Int
+  quantity        Int  
+ createdAt  DateTime @default(now())
   user   Users        @relation(fields: [userId],references: [id],onDelete: Cascade)
-  product Products    @relation(fields: [productId],references: [id])
+  product Products    @relation(fields: [productId],references: [id], onDelete: Cascade)
  }

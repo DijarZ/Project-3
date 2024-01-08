@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 const getOrders = async (req, res) => {
   try {
     const orders = await prisma.orders.findMany();
-    res.json(cart);
+    res.json(orders);
     console.log("Lista e te gjitha porosive: ", orders);
   } catch (error) {
     console.log(error);

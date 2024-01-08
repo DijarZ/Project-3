@@ -10,6 +10,10 @@ import { OrderItemsComponent } from './order-items/order-items.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { ShopingcartComponent } from './shopingcart/shopingcart.component';
+import { CreateUserAdminComponent } from './dashboard-panel/users/create-user-admin/create-user-admin.component';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
+import { AboutComponent } from './about/about.component';
+import { OrdersComponent } from './orders/orders.component';
 const routes: Routes = [
   {
     path: '',
@@ -31,12 +35,22 @@ const routes: Routes = [
       {
         path: 'users',
         component: UsersComponent,
+        children: [
+          {
+            path: 'createUserAdmin',
+            component: CreateUserAdminComponent,
+          },
+        ],
+      },
+      {
+        path: 'dashboard-panel-products',
+        component: DashboardPanelProductsComponent,
+      },
+      {
+        path: 'orders',
+        component: OrdersComponent,
       },
     ],
-  },
-  {
-    path: 'dashboard-panel-products',
-    component: DashboardPanelProductsComponent,
   },
 
   {
@@ -52,12 +66,20 @@ const routes: Routes = [
     component: NavbarComponent,
   },
   {
+    path: 'nav-bar',
+    component: NavBarComponent,
+  },
+  {
     path: 'footer',
     component: FooterComponent,
   },
   {
     path: 'shopingcart',
     component: ShopingcartComponent,
+  },
+  {
+    path: 'About',
+    component: AboutComponent,
   },
 ];
 @NgModule({

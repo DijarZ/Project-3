@@ -1,41 +1,35 @@
-<app-navbar></app-navbar>
+<app-nav-bar></app-nav-bar>
 
 <div class="container mt-5">
   <form>
-    <div *ngFor="let item of orderItems; let i = index" class="mb-3">
+    <div *ngFor="let item of orderItems" class="mb-4 p-3 border rounded">
       <div class="row">
-        <div class="col-md-4">
-          <label for="productId{{ i }}" class="form-label"
-            >Product ID {{ i + 1 }}:</label
-          >
+        <div class="col-md-3">
+          <label for="productId" class="form-label">Product ID:</label>
           <input
             type="text"
             class="form-control"
-            id="productId{{ i }}"
-            [value]="item.product.id"
+            id="productId"
+            [value]="item.product?.id"
             disabled
           />
         </div>
-        <div class="col-md-4">
-          <label for="quantity{{ i }}" class="form-label"
-            >Quantity {{ i + 1 }}:</label
-          >
+        <div class="col-md-3">
+          <label for="quantity" class="form-label">Quantity:</label>
           <input
             type="number"
             class="form-control"
-            id="quantity{{ i }}"
+            id="quantity"
             [value]="item.Quantity"
             disabled
           />
         </div>
-        <div class="col-md-4">
-          <label for="totalAmount{{ i }}" class="form-label"
-            >Total Amount {{ i + 1 }}:</label
-          >
+        <div class="col-md-3">
+          <label for="totalAmount" class="form-label">Total Amount:</label>
           <input
             type="text"
             class="form-control"
-            id="totalAmount{{ i }}"
+            id="totalAmount"
             [value]="item.totalAmount"
             disabled
           />
@@ -47,4 +41,11 @@
       Submit Order Items
     </button>
   </form>
+
+  <div class="d-flex justify-content-end mt-3">
+    <button class="btn btn-info" [routerLink]="'/shopingcart'">
+      Back to Shopping Cart
+    </button>
+  </div>
 </div>
+<app-footer></app-footer>

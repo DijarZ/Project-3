@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Allerta+Stencil&display=swap");
+
+body {
+  background: #cecece;
+}
+
+header {
+  background: #1f5650;
+  color: #fff;
+}
+
+.left-side,
+.right-side {
+  height: 100vh;
+}
+
+.navbar-transparent {
+  background: transparent;
+}
+
+.navbar-nav > li > a {
+  color: #fff;
+}
+
+.navbar-nav > li:hover {
+  border-bottom: 1px solid #fff;
+}
+
+.navbar-nav > .active {
+  border-bottom: 1px solid #fff;
+}
+
+.navbar-brand {
+  font-family: "Allerta Stencil", sans-serif;
+  color: #83ff00;
+}
+
+.navbar-brand:hover {
+  color: #fff;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  margin-bottom: 10%;
+}
+
+.form-control {
+  width: auto;
+  margin: 8px;
+}
+.d-flex {
+  margin-left: 70%;
+}
