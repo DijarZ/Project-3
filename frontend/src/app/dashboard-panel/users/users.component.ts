@@ -26,8 +26,8 @@ export class UsersComponent {
   fetchUsers(): void {
     this.dataService.getUsers().subscribe(
       (users) => {
-        this.users = users; // Assign users data to component variable
-        console.log('Users:', users); // Process users data here
+        this.users = users;
+        console.log('Users:', users);
       },
       (error) => {
         console.error('Error fetching users:', error);
@@ -40,18 +40,16 @@ export class UsersComponent {
       (users) => {
         this.users = users;
         console.log('User deleted:', users);
-        this.fetchUsers(); //to refersh automaticlly page to delete user
+        this.fetchUsers();
         this.showSuccessMessage('User deleted successfully');
       },
       (error) => {
         console.error('Error deleting user:', error);
         console.log(error);
-        // You can define error handling logic like displaying a notification
       }
     );
   }
 
-  // Define a user object to hold user data
   user: any = {
     userId: '',
     newName: '',
@@ -59,7 +57,6 @@ export class UsersComponent {
     newEmail: '',
   };
 
-  // Function to toggle edit mode and fetch user details by ID
   toggleEdit(userId: string | undefined): void {
     if (!userId) {
       console.error('Error: userId is undefined');
@@ -70,16 +67,14 @@ export class UsersComponent {
     this.isEditingUser = true;
     this.dataService.getUserById(userId).subscribe(
       (userData: any) => {
-        this.user = userData; // Assign user details directly
+        this.user = userData;
       },
       (error: any) => {
         console.error('Error fetching user details:', error);
-        // Handle error (e.g., display a notification or perform specific action)
       }
     );
   }
 
-  // Function to confirm user update
   confirmUpdate(userId: string): void {
     console.log('Selected user ID in confirmUpdate:', userId);
 
@@ -101,14 +96,13 @@ export class UsersComponent {
     this.isEditingUser = false;
   }
 
-  // Function to update user details
   updateUser(
     userId: string,
     newName: string | null,
     newLastName: string | null,
     newEmail: string | null,
     newPw: string | null,
-    newRole: string | null // Update role if newRole is provided
+    newRole: string | null
   ): void {
     this.dataService
       .updateUser(userId, newName, newLastName, newEmail, newPw, newRole)
@@ -121,13 +115,12 @@ export class UsersComponent {
         },
         (error: any) => {
           console.error('Error updating user:', error);
-          // Handle error if user update fails (e.g., display error message or perform specific action)
         }
       );
   }
   showSuccessMessage(message: string): void {
     const config = new MatSnackBarConfig();
-    config.duration = 3000; // Set the duration for the snackbar
+    config.duration = 3000;
     this.snackBar.open(message, 'Close', config);
   }
 }

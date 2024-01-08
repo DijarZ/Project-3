@@ -1,44 +1,3 @@
-/* Sidebar styles */
-.sidebar {
-  background-color: #30336b;
-  color: white;
-  height: 100vh;
-  padding-top: 20px;
-}
-
-.sidebar-heading img {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-}
-
-.sidebar-heading span {
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.sidebar-hline {
-  border: none;
-  border-top: 1px solid #fff;
-  margin-bottom: 20px;
-}
-
-.sidebar-menu button {
-  width: 100%;
-  padding: 10px 0;
-  text-align: left;
-  border: none;
-  background: transparent;
-  color: #fff;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
-}
-
-.sidebar-menu button:hover {
-  background-color: #222f3e;
-}
-
-/* Main content */
 .main-content {
   padding-top: 20px;
 }
@@ -75,12 +34,12 @@
 .edit-fields {
   display: wrap;
   flex-direction: column;
-  align-items: flex-start; /* Align items at the start */
-  gap: 10px; /* Spacing between inputs */
+  align-items: flex-start;
+  gap: 10px;
 }
 
 .edit-fields input {
-  width: 200px; /* Set input width as needed */
+  width: 200px;
 }
 
 .edit-button,
