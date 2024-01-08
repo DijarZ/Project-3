@@ -1,15 +1,5 @@
 const jwt = require("jsonwebtoken");
 
-// function generateToken(user) {
-//   const payload = {
-//     userId: user.id,
-//     userEmail: user.email,
-//     userRole: user.role, // Përdor rolin për të menaxhuar autorizimin
-//   };
-//   const verify = jwt.verify(token, process.env.SECRET_TOKEN);
-//   return jwt.sign(payload, secretKey, { expiresIn: "24h" });
-// }
-
 const verifyToken = async (req, res, next) => {
   try {
     const authorizationHeader = req.headers.authorization;

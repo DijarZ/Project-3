@@ -1,54 +1,47 @@
-<div id="viewport" class="d-flex">
-  <div id="sidebar" class="bg-dark text-light">
-    <header class="p-3">
-      <a routerLink="/dashboard-panel" class="text-light text-decoration-none"
-        >Gastronova Panel</a
+<div class="container-fluid px-0">
+  <header>
+    <div class="shape"></div>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-transparent">
+      <a class="navbar-brand" href="products">Dashboard Panel</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
       >
-    </header>
-    <ul class="nav flex-column">
-      <li class="nav-item">
-        <a
-          routerLink="/dashboard-panel/dashboard-panel-products"
-          class="nav-link"
-        >
-          <i class="zmdi zmdi-link me-2"></i> Products
-        </a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/dashboard-panel/users" class="nav-link">
-          <i class="zmdi zmdi-widgets me-2"></i> Users
-        </a>
-      </li>
-      <li class="nav-item">
-        <a href="/dashboard-panel/orders" class="nav-link">
-          <i class="zmdi zmdi-calendar me-2"></i> Orders
-        </a>
-      </li>
-    </ul>
-  </div>
-  <div id="content" class="flex-grow-1">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <div class="container-fluid">
-        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a href="#" class="nav-link">
-              <i class="zmdi zmdi-notifications text-danger"></i>
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a
+              routerLink="/dashboard-panel/dashboard-panel-products"
+              class="nav-link"
+            >
+              <i class="zmdi zmdi-link me-2"></i> Products
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link">Admin</a>
+            <a routerLink="/dashboard-panel/users" class="nav-link">
+              <i class="zmdi zmdi-widgets me-2"></i> Users
+            </a>
           </li>
           <li class="nav-item">
-            <a routerLink="/products">
-              <i class="zmdi zmdi-calendar me-2"></i> Go to Page
+            <a href="/dashboard-panel/orders" class="nav-link">
+              <i class="zmdi zmdi-calendar me-2"></i> Orders
             </a>
+          </li>
+          <li class="nav-item">
+            <button routerLink="/products" class="nav-link">
+              <i class="zmdi zmdi-calendar me-2"></i> Go to Customer Page
+            </button>
           </li>
         </ul>
       </div>
     </nav>
-    <div class="container-fluid p-4">
-      <h1>Dashboard Panel</h1>
-      <div><router-outlet></router-outlet></div>
-    </div>
-  </div>
+  </header>
+  <div><router-outlet></router-outlet></div>
 </div>

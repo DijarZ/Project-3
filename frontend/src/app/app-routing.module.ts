@@ -7,13 +7,14 @@ import { DashboardPanelProductsComponent } from './dashboard-panel-products/dash
 import { UsersComponent } from './dashboard-panel/users/users.component';
 import { ProductsComponent } from './products/products.component';
 import { OrderItemsComponent } from './order-items/order-items.component';
-import { NavbarComponent } from './navbar/navbar.component';
+import { NavbarComponent } from './navbar-Main/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { ShopingcartComponent } from './shopingcart/shopingcart.component';
 import { CreateUserAdminComponent } from './dashboard-panel/users/create-user-admin/create-user-admin.component';
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AboutComponent } from './about/about.component';
 import { OrdersComponent } from './orders/orders.component';
+import { AuthGuard } from './services/auth-guard.service';
 const routes: Routes = [
   {
     path: '',
@@ -31,6 +32,10 @@ const routes: Routes = [
   {
     path: 'dashboard-panel',
     component: DashboardPanelComponent,
+    canActivate: [AuthGuard],
+    data: {
+      expectedRole: 'admin',
+    },
     children: [
       {
         path: 'users',
