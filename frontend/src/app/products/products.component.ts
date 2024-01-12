@@ -5,6 +5,7 @@ import { ShopingcartService } from '../services/shopingcart.service';
 import { AuthService } from '../services/auth.service';
 import { OrderItemsService } from '../services/order-items.service';
 import { Router } from '@angular/router';
+import { error } from 'console';
 @Component({
   selector: 'app-products',
   templateUrl: './products.component.html',
@@ -26,6 +27,11 @@ export class ProductsComponent {
   originalProducts: any[] = [];
   isSearchMode: boolean | undefined;
   allProducts: any[] = [];
+
+  //Pagination
+  currentPage = 1;
+  pageSize = 12;
+
   constructor(
     private dataService: DataService,
     private snackBar: MatSnackBar,
@@ -36,6 +42,8 @@ export class ProductsComponent {
   ) {}
 
   ngOnInit(): void {
+    console.log('ngOnInit called');
+
     this.fetchProducts();
     this.originalProducts = this.products.slice();
     const userId = this.authService.getUserIdFromToken();

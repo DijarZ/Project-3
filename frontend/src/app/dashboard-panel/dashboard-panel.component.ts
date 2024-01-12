@@ -3,6 +3,7 @@ import { DataService } from '../services/data.service';
 import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { UsersComponent } from './users/users.component';
 import { DashboardPanelProductsComponent } from '../dashboard-panel-products/dashboard-panel-products.component';
+import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-dashboard-panel',
   templateUrl: './dashboard-panel.component.html',
@@ -18,7 +19,8 @@ export class DashboardPanelComponent implements OnInit {
 
   constructor(
     private dataService: DataService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -63,5 +65,8 @@ export class DashboardPanelComponent implements OnInit {
     const config = new MatSnackBarConfig();
     config.duration = 3000;
     this.snackBar.open(message, 'Close', config);
+  }
+  Logout() {
+    this.authService.logoutUser();
   }
 }

@@ -15,7 +15,13 @@
     </div>
     <div class="container-fluid bg-transparent my-4 p-3">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-3">
-        <div class="col" *ngFor="let product of getDisplayedProducts()">
+        <div
+          class="col"
+          *ngFor="
+            let product of getDisplayedProducts()
+              | paginate : { itemsPerPage: pageSize, currentPage: currentPage }
+          "
+        >
           <div class="card h-100 shadow">
             <img
               [src]="product.image"
@@ -61,4 +67,5 @@
     </div>
   </div>
 </main>
+<pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
 <app-footer></app-footer>

@@ -15,6 +15,7 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AboutComponent } from './about/about.component';
 import { OrdersComponent } from './orders/orders.component';
 import { AuthGuard } from './services/auth-guard.service';
+import { MyAccountComponent } from './my-account/my-account.component';
 const routes: Routes = [
   {
     path: '',
@@ -85,6 +86,10 @@ const routes: Routes = [
   {
     path: 'About',
     component: AboutComponent,
+  },
+  {
+    path: 'my-account',
+    component: MyAccountComponent,
   },
 ];
 @NgModule({

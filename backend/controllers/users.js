@@ -4,7 +4,16 @@ const prisma = new PrismaClient();
 const jwt = require("jsonwebtoken");
 
 const registerUser = async function (req, res) {
-  const { firstName, lastName, email, password, rolecode } = req.body;
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    rolecode,
+    street,
+    city,
+    country,
+  } = req.body;
   let userRole = "customer";
   try {
     if (rolecode !== undefined && rolecode === process.env.AdminCode) {
@@ -21,6 +30,9 @@ const registerUser = async function (req, res) {
         email,
         password: hashedPw,
         role: userRole,
+        street,
+        city,
+        country,
       },
     });
 
@@ -43,16 +55,12 @@ const loginUser = async function (req, res) {
     });
 
     if (!user) {
-      return res.status(404).json({
-        message: "Përdoruesi nuk u gjet ose të dhënat janë të pasakta.",
-      });
+      return res.status(404).json("User not found or data is incorrect.");
     }
     const pwDecrypt = await bcrypt.compare(password, user.password);
 
     if (!pwDecrypt) {
-      return res.status(401).json({
-        message: "Fjalëkalimi është i pasaktë.",
-      });
+      return res.status(401).json("Password is incorrect.");
     }
     const token = await jwt.sign(user, process.env.SECRET_TOKEN, {
       expiresIn: "60m",
@@ -68,7 +76,16 @@ const loginUser = async function (req, res) {
 const updateUser = async (req, res) => {
   try {
     const { userId } = req.params;
-    const { newName, newLastName, newEmail, newPw, newRole } = req.body;
+    const {
+      newName,
+      newLastName,
+      newEmail,
+      newPw,
+      newRole,
+      newStreet,
+      newCity,
+      newCountry,
+    } = req.body;
 
     const user = await prisma.users.findUnique({
       where: {
@@ -77,9 +94,11 @@ const updateUser = async (req, res) => {
     });
 
     if (!user) {
-      return res.status(404).json({ message: "Përdoruesi nuk u gjet." });
+      return res.status(404).json(" User not found");
     } else if (!(req.user.role === "admin") && req.user.id !== user.id) {
-      return res.status(403).send("Ju nuk keni leje për të kryer këtë veprim.");
+      return res
+        .status(403)
+        .send("You dont have access to perform this service");
     }
 
     const dataToUpdate = {};
@@ -100,6 +119,15 @@ const updateUser = async (req, res) => {
     }
     if (newRole !== undefined) {
       dataToUpdate.role = newRole;
+    }
+    if (newStreet !== undefined) {
+      dataToUpdate.street = newStreet;
+    }
+    if (newCountry !== undefined) {
+      dataToUpdate.country = newCountry;
+    }
+    if (newCity !== undefined) {
+      dataToUpdate.city = newCity;
     }
 
     const updatedUser = await prisma.users.update({
@@ -127,10 +155,12 @@ const deleteUser = async (req, res) => {
       },
     });
     if (!user) {
-      return res.status(404).json("Perdoruesi nuk u gjet");
+      return res.status(404).json("User not found");
     }
     if (req.user.role !== "admin" && req.user.id !== user.id) {
-      return res.status(403).send("Ju nuk keni te drejt per te bere kete");
+      return res
+        .status(403)
+        .send("You dont have acces to perform this service");
     }
     const deletedUser = await prisma.users.delete({
       where: {
@@ -139,9 +169,9 @@ const deleteUser = async (req, res) => {
     });
 
     if (deletedUser) {
-      res.json("Përdoruesi u fshi me sukses!");
+      res.json("User deleted succesfully!");
     } else {
-      res.status(404).json("Perdoruesi nuk u gjet.");
+      res.status(404).json("User not found.");
     }
   } catch (error) {
     console.log(error);

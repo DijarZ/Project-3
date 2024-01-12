@@ -13,6 +13,10 @@ export class CreateAccountComponent {
   lastName: string = '';
   email: string = '';
   password: string = '';
+  city: string = '';
+  country: string = '';
+  street: string = '';
+
   showSuccessModal: boolean = false;
 
   constructor(
@@ -26,6 +30,9 @@ export class CreateAccountComponent {
       lastName: this.lastName,
       email: this.email,
       password: this.password,
+      city: this.city,
+      country: this.country,
+      street: this.street,
     };
 
     this.authService.registerUser(userData).subscribe(

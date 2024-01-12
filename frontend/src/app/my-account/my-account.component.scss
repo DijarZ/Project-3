@@ -1,0 +1,29 @@
+.container {
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+.user-data {
+  font-size: 18px;
+}
+
+.edit-fields input {
+  margin-bottom: 10px;
+  padding: 8px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+button {
+  padding: 10px;
+  background-color: aqua;
+  border: 0;
+  border-radius: 5px;
+}
+
+.delete-button {
+  background-color: #dc3545;
+  color: #fff;
+  border: 0;
+  border-radius: 5px;
+}

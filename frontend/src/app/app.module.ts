@@ -26,6 +26,8 @@ import { CreateUserAdminComponent } from './dashboard-panel/users/create-user-ad
 import { NavBarComponent } from './nav-bar/nav-bar.component';
 import { AboutComponent } from './about/about.component';
 import { OrdersComponent } from './orders/orders.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { MyAccountComponent } from './my-account/my-account.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,6 +45,7 @@ import { OrdersComponent } from './orders/orders.component';
     NavBarComponent,
     AboutComponent,
     OrdersComponent,
+    MyAccountComponent,
   ],
   imports: [
     BrowserModule,
@@ -52,6 +55,7 @@ import { OrdersComponent } from './orders/orders.component';
     ToastrModule.forRoot(),
     BrowserAnimationsModule,
     MatSnackBarModule,
+    NgxPaginationModule,
   ],
   providers: [provideClientHydration(), provideHttpClient(withFetch())],
   bootstrap: [AppComponent],

@@ -55,6 +55,9 @@ export class UsersComponent {
     newName: '',
     newLastName: '',
     newEmail: '',
+    newCity: '',
+    newStreet: '',
+    newCountry: '',
   };
 
   toggleEdit(userId: string | undefined): void {
@@ -91,7 +94,10 @@ export class UsersComponent {
       currentUser.newLastName,
       currentUser.newEmail,
       currentUser.newPw,
-      currentUser.newRole
+      currentUser.newRole,
+      currentUser.newCity,
+      currentUser.newStreet,
+      currentUser.newCountry
     );
     this.isEditingUser = false;
   }
@@ -102,10 +108,23 @@ export class UsersComponent {
     newLastName: string | null,
     newEmail: string | null,
     newPw: string | null,
-    newRole: string | null
+    newRole: string | null,
+    newCity: string | null,
+    newStreet: string | null,
+    newCountry: string | null
   ): void {
     this.dataService
-      .updateUser(userId, newName, newLastName, newEmail, newPw, newRole)
+      .updateUser(
+        userId,
+        newName,
+        newLastName,
+        newEmail,
+        newPw,
+        newRole,
+        newCity,
+        newStreet,
+        newCountry
+      )
       .subscribe(
         (updatedUser: any) => {
           console.log('User updated:', updatedUser);

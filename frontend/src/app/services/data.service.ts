@@ -47,7 +47,10 @@ export class DataService {
     newLastName: string | null,
     newEmail: string | null,
     newPw: string | null,
-    newRole: string | null
+    newRole: string | null,
+    newCity: string | null,
+    newStreet: string | null,
+    newCountry: string | null
   ): Observable<any> {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
@@ -60,6 +63,9 @@ export class DataService {
       newEmail,
       newPw,
       newRole,
+      newCity,
+      newStreet,
+      newCountry,
     };
 
     return this.http.put<any>(`${this.baseUrl}/updateUser/${userId}`, data, {
@@ -67,8 +73,8 @@ export class DataService {
     });
   }
 
-  getUserById(userId: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/getUserById/${userId}`);
+  getUserById(userId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/getUserById/${userId}`);
   }
 
   getProducts(): Observable<any> {

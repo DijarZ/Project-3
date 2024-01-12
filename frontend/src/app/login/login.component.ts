@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Observable } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -11,7 +12,10 @@ export class LoginComponent {
   password: string = '';
   emptyValues: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private toastr: ToastrService
+  ) {}
 
   login() {
     if (this.email.length !== 0 && this.password.length !== 0) {
@@ -27,11 +31,13 @@ export class LoginComponent {
 
           const userRole = this.authService.getUserRole();
           console.log('User Role:', userRole);
-
-          this.authService.redirectBasedOnRole();
+          setTimeout(() => {
+            this.authService.redirectBasedOnRole();
+          }, 1000);
         },
         (error: any) => {
           console.error('Error during login:', error);
+          alert('Login error! The password or email is wrong');
         }
       );
     }

@@ -17,8 +17,9 @@
                 <div class="user-row">
                   <div class="user-data">
                     <p>
-                      {{ user.id }} {{ user.firstName }} {{ user.lastName }} -
-                      {{ user.email }} -{{ user.role }}
+                      {{ user.id }} - {{ user.firstName }} {{ user.lastName }} -
+                      {{ user.email }} - {{ user.role }} - {{ user.city }} -
+                      {{ user.street }} - {{ user.country }}
                     </p>
                   </div>
                   <div class="user-actions">
@@ -50,6 +51,21 @@
                         type="password"
                         [(ngModel)]="user.newPw"
                         placeholder="New Password"
+                      />
+                      <input
+                        type="text"
+                        [(ngModel)]="user.newCity"
+                        placeholder="New City"
+                      />
+                      <input
+                        type="text"
+                        [(ngModel)]="user.newStreet"
+                        placeholder="New Street"
+                      />
+                      <input
+                        type="text"
+                        [(ngModel)]="user.newCountry"
+                        placeholder="New Country"
                       />
 
                       <button (click)="confirmUpdate(user.id)">OK</button>

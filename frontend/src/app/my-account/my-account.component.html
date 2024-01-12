@@ -1,0 +1,91 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-9 mx-auto">
+      <div class="main-content card card2 p-3">
+        <h2 class="mb-4">Edit Profile</h2>
+        <div class="user-columns">
+          <div class="user-row">
+            <div class="user-data">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>First Name</th>
+                      <th>Last Name</th>
+                      <th>Email</th>
+                      <th>Role</th>
+                      <th>City</th>
+                      <th>Street</th>
+                      <th>Country</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>{{ userData?.id }}</td>
+                      <td>{{ userData?.firstName }}</td>
+                      <td>{{ userData?.lastName }}</td>
+                      <td>{{ userData?.email }}</td>
+                      <td>{{ userData?.role }}</td>
+                      <td>{{ userData?.city }}</td>
+                      <td>{{ userData?.street }}</td>
+                      <td>{{ userData?.country }}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="user-actions">
+              <div class="edit-fields">
+                <input
+                  type="text"
+                  [(ngModel)]="userData.newName"
+                  placeholder="New Name"
+                />
+                <input
+                  type="text"
+                  [(ngModel)]="userData.newLastName"
+                  placeholder="New Last Name"
+                />
+                <input
+                  type="text"
+                  [(ngModel)]="userData.newEmail"
+                  placeholder="New Email"
+                />
+                <input
+                  type="text"
+                  [(ngModel)]="userData.newCity"
+                  placeholder="New City"
+                />
+                <input
+                  type="text"
+                  [(ngModel)]="userData.newStreet"
+                  placeholder="New Street"
+                />
+                <input
+                  type="text"
+                  [(ngModel)]="userData.newCountry"
+                  placeholder="New Country"
+                />
+
+                <div class="edit-fields">
+                  <button (click)="confirmUpdate()">Update</button>
+                </div>
+                <div
+                  class="user-actions d-flex justify-content-end align-items-center"
+                >
+                  <button (click)="deleteUser()" class="delete-button ml-2">
+                    Delete
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr class="row-separator" />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
